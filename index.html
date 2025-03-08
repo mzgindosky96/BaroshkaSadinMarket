@@ -5,37 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Baroshka Sa'din Market</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="Market.css">
 </head>
 <body>
     <!-- Welcome Banner -->
     <div id="welcome-banner">
-        <p>Bxerbhen bo Baroshka Sa'din Market! Bdlexo bazarbka.</p>
+        <p id="welcome-message">Welcome to Baroshka Sa'din Market! Enjoy your shopping.</p>
         <button id="close-banner">Close</button>
+    </div>
+
+    <!-- Language Switcher -->
+    <div id="language-switcher">
+        <button id="lang-en">English</button>
+        <button id="lang-ku">Kurdish</button>
     </div>
 
     <header>
         <div class="logo">
-            <h1>Baroshka Sa'din Market</h1>
-            <p>Bo Frotna Kalupalen Nafmale U Xarn U Vaxarna </p>
+            <h1 id="market-name">Baroshka Sa'din Market</h1>
+            <p id="market-tagline">For Fresh Groceries and Daily Needs</p>
         </div>
         <nav>
             <ul>
-                <li><a href="#home">Dastpek</a></li>
-                <li><a href="#products">Barham</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#contact">Paywandikrn</a></li>
+                <li><a href="#home" id="nav-home">Home</a></li>
+                <li><a href="#products" id="nav-products">Products</a></li>
+                <li><a href="#about" id="nav-about">About Us</a></li>
+                <li><a href="#contact" id="nav-contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <section id="home" class="hero">
-        <h2>Welcome to Baroshka Sa'din Market!</h2>
-        <p>har tshtaki dle ta bxazet ye l markete hay.</p>
+        <h2 id="hero-title">Welcome to Baroshka Sa'din Market!</h2>
+        <p id="hero-description">Find everything you need at our market.</p>
     </section>
 
     <section id="products">
-        <h2>Barhamen Ma</h2>
+        <h2 id="products-title">Our Products</h2>
         <div class="product-list">
             <div class="product">
                 <img src="download.jpg" alt="Feqi u Xazrawat">
@@ -54,21 +61,85 @@
     </section>
 
     <section id="about">
-        <h2>About Us</h2>
-        <p>Baroshka Sa'din Market has been serving the community for over 2 years. We are committed to providing fresh, high-quality products at affordable prices. Our friendly staff is always here to help you find what you need.</p>
+        <h2 id="about-title">About Us</h2>
+        <p id="about-description">Baroshka Sa'din Market has been serving the community for over 2 years. We are committed to providing fresh, high-quality products at affordable prices. Our friendly staff is always here to help you find what you need.</p>
     </section>
 
     <section id="contact">
-        <h2>Contact Us</h2>
+        <h2 id="contact-title">Contact Us</h2>
         <p>Email: info@baroshkasaadin.com</p>
         <p>Phone: +9647518865929</p>
-        <p>Address: Baste Road, Duhok, iraq</p>
+        <p>Address: Baste Road, Duhok, Iraq</p>
     </section>
 
     <footer>
-        <p>&copy; 2025 Baroshka Sa'din Market. All rights reserved.</p>
+        <p>&copy; <span id="footer-year">2025</span> Baroshka Sa'din Market. All rights reserved.</p>
     </footer>
 
     <script src="Market.js"></script>
+    <script>
+        // Language Data
+        const languages = {
+            en: {
+                welcomeMessage: "Welcome to Baroshka Sa'din Market! Enjoy your shopping.",
+                marketName: "Baroshka Sa'din Market",
+                marketTagline: "For Fresh Groceries and Daily Needs",
+                navHome: "Home",
+                navProducts: "Products",
+                navAbout: "About Us",
+                navContact: "Contact",
+                heroTitle: "Welcome to Baroshka Sa'din Market!",
+                heroDescription: "Find everything you need at our market.",
+                productsTitle: "Our Products",
+                aboutTitle: "About Us",
+                aboutDescription: "Baroshka Sa'din Market has been serving the community for over 2 years. We are committed to providing fresh, high-quality products at affordable prices. Our friendly staff is always here to help you find what you need.",
+                contactTitle: "Contact Us"
+            },
+            ku: {
+                welcomeMessage: "Bxerbhen bo Baroshka Sa'din Market! Bdlexo bazarbka.",
+                marketName: "Baroshka Sa'din Market",
+                marketTagline: "Bo Frotna Kalupalen Nafmale U Xarn U Vaxarna",
+                navHome: "Dastpek",
+                navProducts: "Barham",
+                navAbout: "About Us",
+                navContact: "Paywandikrn",
+                heroTitle: "Bxerbhen bo Baroshka Sa'din Market!",
+                heroDescription: "har tshtaki dle ta bxazet ye l markete hay.",
+                productsTitle: "Barhamen Ma",
+                aboutTitle: "About Us",
+                aboutDescription: "Baroshka Sa'din Market has been serving the community for over 2 years. We are committed to providing fresh, high-quality products at affordable prices. Our friendly staff is always here to help you find what you need.",
+                contactTitle: "Paywandikrn"
+            }
+        };
+
+        // Language Switcher
+        document.getElementById('lang-en').addEventListener('click', () => changeLanguage('en'));
+        document.getElementById('lang-ku').addEventListener('click', () => changeLanguage('ku'));
+
+        function changeLanguage(lang) {
+            const data = languages[lang];
+            document.getElementById('welcome-message').textContent = data.welcomeMessage;
+            document.getElementById('market-name').textContent = data.marketName;
+            document.getElementById('market-tagline').textContent = data.marketTagline;
+            document.getElementById('nav-home').textContent = data.navHome;
+            document.getElementById('nav-products').textContent = data.navProducts;
+            document.getElementById('nav-about').textContent = data.navAbout;
+            document.getElementById('nav-contact').textContent = data.navContact;
+            document.getElementById('hero-title').textContent = data.heroTitle;
+            document.getElementById('hero-description').textContent = data.heroDescription;
+            document.getElementById('products-title').textContent = data.productsTitle;
+            document.getElementById('about-title').textContent = data.aboutTitle;
+            document.getElementById('about-description').textContent = data.aboutDescription;
+            document.getElementById('contact-title').textContent = data.contactTitle;
+        }
+
+        // Close Welcome Banner
+        document.getElementById('close-banner').addEventListener('click', () => {
+            document.getElementById('welcome-banner').style.display = 'none';
+        });
+
+        // Update Footer Year
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
