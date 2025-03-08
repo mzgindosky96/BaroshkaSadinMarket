@@ -60,6 +60,21 @@ const languageData = {
         aboutTitle: "About Us",
         aboutDescription: "Baroshka Sa'din Market has been serving the community for over 2 years. We are committed to providing fresh, high-quality products at affordable prices. Our friendly staff is always here to help you find what you need.",
         contactTitle: "Paywandikrn"
+    },
+    ar: {
+        welcomeMessage: "مرحبًا بكم في سوق باروشكا سعدين! استمتع بالتسوق.",
+        marketName: "سوق باروشكا سعدين",
+        marketTagline: "للمواد الغذائية الطازجة والاحتياجات اليومية",
+        navHome: "الرئيسية",
+        navProducts: "المنتجات",
+        navAbout: "من نحن",
+        navContact: "اتصل بنا",
+        heroTitle: "مرحبًا بكم في سوق باروشكا سعدين!",
+        heroDescription: "ابحث عن كل ما تحتاجه في سوقنا.",
+        productsTitle: "منتجاتنا",
+        aboutTitle: "من نحن",
+        aboutDescription: "سوق باروشكا سعدين يخدم المجتمع منذ أكثر من عامين. نحن ملتزمون بتوفير منتجات طازجة وعالية الجودة بأسعار معقولة. فريق العمل الودود لدينا دائمًا هنا لمساعدتك في العثور على ما تحتاجه.",
+        contactTitle: "اتصل بنا"
     }
 };
 
@@ -82,11 +97,15 @@ function changeLanguage(lang) {
     document.getElementById("about-title").textContent = data.aboutTitle;
     document.getElementById("about-description").textContent = data.aboutDescription;
     document.getElementById("contact-title").textContent = data.contactTitle;
+
+    // Update the HTML lang attribute
+    document.documentElement.lang = lang;
 }
 
 // Add event listeners to language switcher buttons
 document.getElementById("lang-en").addEventListener("click", () => changeLanguage("en"));
 document.getElementById("lang-ku").addEventListener("click", () => changeLanguage("ku"));
+document.getElementById("lang-ar").addEventListener("click", () => changeLanguage("ar"));
 
 // Set default language to English on page load
 changeLanguage("en");
