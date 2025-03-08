@@ -1,4 +1,18 @@
 /* General Styles */
+/* RTL Support for Arabic */
+[lang="ar"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+[lang="ar"] nav ul {
+    justify-content: flex-end;
+}
+
+[lang="ar"] .hero, [lang="ar"] #products, [lang="ar"] #about, [lang="ar"] #contact {
+    text-align: right;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
