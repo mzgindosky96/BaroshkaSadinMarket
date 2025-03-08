@@ -197,7 +197,8 @@ nav ul li a:hover {
 }
 
 #post-form input,
-#post-form textarea {
+#post-form textarea,
+#post-form input[type="file"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -208,7 +209,8 @@ nav ul li a:hover {
 }
 
 #post-form input:focus,
-#post-form textarea:focus {
+#post-form textarea:focus,
+#post-form input[type="file"]:focus {
     border-color: #2d87f0;
     outline: none;
 }
@@ -276,6 +278,20 @@ nav ul li a:hover {
     font-size: 16px;
     color: #555;
     line-height: 1.6;
+}
+
+/* Media Upload Preview */
+#posts li img,
+#posts li video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+#posts li video {
+    width: 100%;
+    height: auto;
 }
 
 /* Footer */
@@ -405,7 +421,8 @@ footer p {
     }
 
     #post-form input,
-    #post-form textarea {
+    #post-form textarea,
+    #post-form input[type="file"] {
         font-size: 14px;
     }
 
@@ -469,7 +486,8 @@ footer p {
     }
 
     #post-form input,
-    #post-form textarea {
+    #post-form textarea,
+    #post-form input[type="file"] {
         font-size: 12px;
     }
 
