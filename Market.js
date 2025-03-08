@@ -51,6 +51,7 @@ const languageData = {
         postListTitle: "Recent Posts", // New Post List Title
         postPlaceholderTitle: "Enter post title", // New Post Title Placeholder
         postPlaceholderContent: "Write your post here...", // New Post Content Placeholder
+        postMediaLabel: "Upload Media (Image/Video):", // New Media Upload Label
     },
     ku: {
         welcomeMessage: "Bxerbhen bo Baroshka Sa'din Market! Bdlexo bazarbka.",
@@ -72,6 +73,7 @@ const languageData = {
         postListTitle: "Postên Dawî", // New Post List Title
         postPlaceholderTitle: "Sernavê postê binivîse", // New Post Title Placeholder
         postPlaceholderContent: "Posta xwe li vir binivîse...", // New Post Content Placeholder
+        postMediaLabel: "Medya bar bike (Wêne/Vîdeo):", // New Media Upload Label
     },
     ar: {
         welcomeMessage: "مرحبًا بكم في سوق باروشكا سعدين! استمتع بالتسوق.",
@@ -93,6 +95,7 @@ const languageData = {
         postListTitle: "المنشورات الأخيرة", // New Post List Title
         postPlaceholderTitle: "أدخل عنوان المنشور", // New Post Title Placeholder
         postPlaceholderContent: "اكتب منشورك هنا...", // New Post Content Placeholder
+        postMediaLabel: "رفع ملف (صورة/فيديو):", // New Media Upload Label
     }
 };
 
@@ -121,6 +124,7 @@ function changeLanguage(lang) {
     document.querySelector("#post-list h3").textContent = data.postListTitle; // New Post List Title
     document.getElementById("post-title-input").placeholder = data.postPlaceholderTitle; // New Post Title Placeholder
     document.getElementById("post-content").placeholder = data.postPlaceholderContent; // New Post Content Placeholder
+    document.querySelector('label[for="post-media"]').textContent = data.postMediaLabel; // New Media Upload Label
 
     // Update the HTML lang attribute
     document.documentElement.lang = lang;
@@ -137,16 +141,28 @@ changeLanguage("en");
 // Update Footer Year Dynamically
 document.getElementById("footer-year").textContent = new Date().getFullYear();
 
-// Handle Post Submission
+// Handle Post Submission with Media Upload
 document.getElementById("post-form").addEventListener("submit", function(e) {
     e.preventDefault();
     const title = document.getElementById("post-title-input").value;
     const content = document.getElementById("post-content").value;
+    const mediaFile = document.getElementById("post-media").files[0];
 
     if (title && content) {
         const postList = document.getElementById("posts");
         const postItem = document.createElement("li");
         postItem.innerHTML = `<strong>${title}</strong><p>${content}</p>`;
+
+        // Display uploaded media if available
+        if (mediaFile) {
+            const mediaURL = URL.createObjectURL(mediaFile);
+            if (mediaFile.type.startsWith("image")) {
+                postItem.innerHTML += `<img src="${mediaURL}" alt="Uploaded Media" style="max-width: 100%; height: auto;">`;
+            } else if (mediaFile.type.startsWith("video")) {
+                postItem.innerHTML += `<video controls style="max-width: 100%; height: auto;"><source src="${mediaURL}" type="${mediaFile.type}">Your browser does not support the video tag.</video>`;
+            }
+        }
+
         postList.appendChild(postItem);
 
         // Clear the form
