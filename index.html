@@ -77,11 +77,13 @@
     <!-- New Post Section -->
     <section id="post">
         <h2 id="post-title">Create a Post</h2>
-        <form id="post-form">
+        <form id="post-form" enctype="multipart/form-data">
             <label for="post-title-input">Title:</label>
             <input type="text" id="post-title-input" name="post-title" required>
             <label for="post-content">Content:</label>
             <textarea id="post-content" name="post-content" rows="4" required></textarea>
+            <label for="post-media">Upload Media (Image/Video):</label>
+            <input type="file" id="post-media" name="post-media" accept="image/*, video/*">
             <button type="submit">Submit Post</button>
         </form>
         <div id="post-list">
@@ -203,11 +205,23 @@
             e.preventDefault();
             const title = document.getElementById('post-title-input').value;
             const content = document.getElementById('post-content').value;
+            const mediaFile = document.getElementById('post-media').files[0];
 
             if (title && content) {
                 const postList = document.getElementById('posts');
                 const postItem = document.createElement('li');
                 postItem.innerHTML = `<strong>${title}</strong><p>${content}</p>`;
+
+                // Display uploaded media if available
+                if (mediaFile) {
+                    const mediaURL = URL.createObjectURL(mediaFile);
+                    if (mediaFile.type.startsWith('image')) {
+                        postItem.innerHTML += `<img src="${mediaURL}" alt="Uploaded Media" style="max-width: 100%; height: auto;">`;
+                    } else if (mediaFile.type.startsWith('video')) {
+                        postItem.innerHTML += `<video controls style="max-width: 100%; height: auto;"><source src="${mediaURL}" type="${mediaFile.type}">Your browser does not support the video tag.</video>`;
+                    }
+                }
+
                 postList.appendChild(postItem);
 
                 // Clear the form
