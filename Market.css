@@ -9,7 +9,7 @@
     justify-content: flex-end;
 }
 
-[lang="ar"] .hero, [lang="ar"] #products, [lang="ar"] #about, [lang="ar"] #contact {
+[lang="ar"] .hero, [lang="ar"] #products, [lang="ar"] #about, [lang="ar"] #contact, [lang="ar"] #post {
     text-align: right;
 }
 
@@ -160,6 +160,124 @@ nav ul li a:hover {
     line-height: 1.8;
 }
 
+/* Post Section */
+#post {
+    padding: 40px 20px;
+    background-color: #fff;
+    margin: 20px 0;
+    text-align: center;
+}
+
+#post h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #2d87f0;
+}
+
+#post-form {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#post-form label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: left;
+}
+
+[lang="ar"] #post-form label {
+    text-align: right;
+}
+
+#post-form input,
+#post-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#post-form input:focus,
+#post-form textarea:focus {
+    border-color: #2d87f0;
+    outline: none;
+}
+
+#post-form textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+#post-form button {
+    background-color: #2d87f0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#post-form button:hover {
+    background-color: #1c6fd8;
+}
+
+#post-list {
+    margin-top: 30px;
+}
+
+#post-list h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2d87f0;
+}
+
+#posts {
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#posts li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+[lang="ar"] #posts li {
+    text-align: right;
+}
+
+#posts li strong {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 10px;
+    color: #2d87f0;
+}
+
+#posts li p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
 /* Footer */
 footer {
     background-color: #2d87f0;
@@ -265,7 +383,7 @@ footer p {
         font-size: 18px;
     }
 
-    #products h2, #about h2, #contact h2 {
+    #products h2, #about h2, #contact h2, #post h2 {
         font-size: 28px;
     }
 
@@ -276,6 +394,35 @@ footer p {
 
     .product p {
         font-size: 16px;
+    }
+
+    #post-form {
+        padding: 15px;
+    }
+
+    #post-form label {
+        font-size: 16px;
+    }
+
+    #post-form input,
+    #post-form textarea {
+        font-size: 14px;
+    }
+
+    #post-form button {
+        font-size: 16px;
+    }
+
+    #posts li {
+        padding: 15px;
+    }
+
+    #posts li strong {
+        font-size: 18px;
+    }
+
+    #posts li p {
+        font-size: 14px;
     }
 }
 
@@ -304,12 +451,41 @@ footer p {
         font-size: 16px;
     }
 
-    #products h2, #about h2, #contact h2 {
+    #products h2, #about h2, #contact h2, #post h2 {
         font-size: 24px;
     }
 
     .product {
         width: 100%;
         margin: 10px 0;
+    }
+
+    #post-form {
+        padding: 10px;
+    }
+
+    #post-form label {
+        font-size: 14px;
+    }
+
+    #post-form input,
+    #post-form textarea {
+        font-size: 12px;
+    }
+
+    #post-form button {
+        font-size: 14px;
+    }
+
+    #posts li {
+        padding: 10px;
+    }
+
+    #posts li strong {
+        font-size: 16px;
+    }
+
+    #posts li p {
+        font-size: 12px;
     }
 }
