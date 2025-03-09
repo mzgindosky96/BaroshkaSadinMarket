@@ -13,7 +13,586 @@
     text-align: right;
 }
 
+body {/* General Styles */
+/* RTL Support for Arabic */
+[lang="ar"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+[lang="ar"] nav ul {
+    justify-content: flex-end;
+}
+
+[lang="ar"] .hero, [lang="ar"] #products, [lang="ar"] #about, [lang="ar"] #contact, [lang="ar"] #post {
+    text-align: right;
+}
+
 body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #2d87f0;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Decorative Title */
+header h1.decorative-title {
+    font-size: 48px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #2d87f0, #4CAF50, #f8b400);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: glow 3s infinite alternate;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Glow Animation */
+@keyframes glow {
+    0% {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(45, 135, 240, 0.8), 0 0 20px rgba(76, 175, 80, 0.8), 0 0 30px rgba(248, 180, 0, 0.8);
+    }
+}
+
+header p {
+    margin: 5px 0;
+    font-size: 16px;
+    font-style: italic;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #f8b400;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #4CAF50;
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    background-image: url('hero-bg.jpg'); /* Add a background image */
+    background-size: cover;
+    background-position: center;
+}
+
+.hero h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.hero p {
+    font-size: 24px;
+    animation: fadeIn 3s ease-in-out;
+}
+
+/* Products Section */
+#products {
+    background-color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+#products h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #2d87f0;
+}
+
+.product-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.product {
+    background-color: #f0f0f0;
+    margin: 10px;
+    padding: 20px;
+    width: 200px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product img {
+    width: 100%;
+    border-radius: 8px;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.product p {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* About and Contact Section */
+#about, #contact {
+    padding: 40px 20px;
+    background-color: #fff;
+    margin: 20px 0;
+    text-align: center;
+}
+
+#about h2, #contact h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #2d87f0;
+}
+
+#about p, #contact p {
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+/* Post Section */
+#post {
+    padding: 40px 20px;
+    background-color: #fff;
+    margin: 20px 0;
+    text-align: center;
+}
+
+#post h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #2d87f0;
+}
+
+#post-form {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#post-form label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: left;
+}
+
+[lang="ar"] #post-form label {
+    text-align: right;
+}
+
+#post-form input,
+#post-form textarea,
+#post-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#post-form input:focus,
+#post-form textarea:focus,
+#post-form input[type="file"]:focus {
+    border-color: #2d87f0;
+    outline: none;
+}
+
+#post-form textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+#post-form button {
+    background-color: #2d87f0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#post-form button:hover {
+    background-color: #1c6fd8;
+}
+
+#post-list {
+    margin-top: 30px;
+}
+
+#post-list h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2d87f0;
+}
+
+#posts {
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#posts li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+[lang="ar"] #posts li {
+    text-align: right;
+}
+
+#posts li strong {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 10px;
+    color: #2d87f0;
+}
+
+#posts li p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Media Upload Preview */
+#posts li img,
+#posts li video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+#posts li video {
+    width: 100%;
+    height: auto;
+}
+
+/* Footer */
+footer {
+    background-color: #2d87f0;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    position: relative;
+}
+
+footer p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Language Switcher in Footer */
+#language-switcher {
+    margin-top: 10px;
+}
+
+.language-dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.language-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.language-button:hover {
+    background-color: #f8f8f8;
+    border-color: #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.language-button i {
+    font-size: 16px;
+    color: #555;
+}
+
+.language-options {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 5px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    overflow: hidden;
+    width: 120px;
+}
+
+.language-option {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.language-option:hover {
+    background-color: #f8f8f8;
+    color: #007bff;
+}
+
+.language-dropdown:hover .language-options {
+    display: block;
+}
+
+/* Welcome Banner */
+#welcome-banner {
+    background-color: #f8b400;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#welcome-banner p {
+    margin: 0;
+    font-size: 18px;
+}
+
+#welcome-banner button {
+    background-color: #ff5733;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#welcome-banner button:hover {
+    background-color: #e64a2e;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1.decorative-title {
+        font-size: 36px;
+        padding: 8px 16px;
+    }
+
+    header p {
+        font-size: 14px;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+    }
+
+    .hero h2 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    #products h2, #about h2, #contact h2, #post h2 {
+        font-size: 28px;
+    }
+
+    .product {
+        width: 150px;
+        padding: 15px;
+    }
+
+    .product p {
+        font-size: 16px;
+    }
+
+    #post-form {
+        padding: 15px;
+    }
+
+    #post-form label {
+        font-size: 16px;
+    }
+
+    #post-form input,
+    #post-form textarea,
+    #post-form input[type="file"] {
+        font-size: 14px;
+    }
+
+    #post-form button {
+        font-size: 16px;
+    }
+
+    #posts li {
+        padding: 15px;
+    }
+
+    #posts li strong {
+        font-size: 18px;
+    }
+
+    #posts li p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1.decorative-title {
+        font-size: 28px;
+        padding: 6px 12px;
+    }
+
+    header p {
+        font-size: 12px;
+    }
+
+    nav ul li {
+        margin: 0 10px;
+    }
+
+    nav ul li a {
+        font-size: 14px;
+    }
+
+    .hero h2 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    #products h2, #about h2, #contact h2, #post h2 {
+        font-size: 24px;
+    }
+
+    .product {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    #post-form {
+        padding: 10px;
+    }
+
+    #post-form label {
+        font-size: 14px;
+    }
+
+    #post-form input,
+    #post-form textarea,
+    #post-form input[type="file"] {
+        font-size: 12px;
+    }
+
+    #post-form button {
+        font-size: 14px;
+    }
+
+    #posts li {
+        padding: 10px;
+    }
+
+    #posts li strong {
+        font-size: 16px;
+    }
+
+    #posts li p {
+        font-size: 12px;
+    }
+}
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
