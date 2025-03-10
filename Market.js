@@ -13,26 +13,9 @@ document.querySelectorAll('nav ul li a').forEach(anchor => {
     });
 });
 
-// Welcome Banner Display
-window.onload = function () {
-    const banner = document.getElementById("welcome-banner");
-    banner.style.display = "block"; // Show the banner when page loads
-
-    // Close the banner when the user clicks the close button
-    document.getElementById("close-banner").addEventListener("click", function () {
-        banner.style.display = "none";
-    });
-
-    // Automatically hide the banner after 5 seconds
-    setTimeout(() => {
-        banner.style.display = "none";
-    }, 5000);
-};
-
 // Language Data
 const languageData = {
     en: {
-        welcomeMessage: "Welcome to Baroshka Sa'din Market! Enjoy your shopping.",
         marketName: "Baroshka Sa'din Market",
         marketTagline: "For Fresh Groceries and Daily Needs",
         navHome: "Home",
@@ -54,7 +37,6 @@ const languageData = {
         postMediaLabel: "Upload Media (Image/Video):",
     },
     ku: {
-        welcomeMessage: "Bxerbhen bo Baroshka Sa'din Market! Bdlexo bazarbka.",
         marketName: "Baroshka Sa'din Market",
         marketTagline: "Bo Frotna Kalupalen Nafmale U Xarn U Vaxarna",
         navHome: "Dastpek",
@@ -76,7 +58,6 @@ const languageData = {
         postMediaLabel: "Medya bar bike (Wêne/Vîdeo):",
     },
     ar: {
-        welcomeMessage: "مرحبًا بكم في سوق باروشكا سعدين! استمتع بالتسوق.",
         marketName: "سوق باروشكا سعدين",
         marketTagline: "للمواد الغذائية الطازجة والاحتياجات اليومية",
         navHome: "الرئيسية",
@@ -105,7 +86,6 @@ function changeLanguage(lang) {
     if (!data) return;
 
     // Update all elements with language-specific content
-    document.getElementById("welcome-message").textContent = data.welcomeMessage;
     document.getElementById("market-name").textContent = data.marketName;
     document.getElementById("market-tagline").textContent = data.marketTagline;
     document.getElementById("nav-home").textContent = data.navHome;
@@ -132,6 +112,60 @@ function changeLanguage(lang) {
     // Update the HTML lang attribute
     document.documentElement.lang = lang;
 }
+// Function to fetch weather data
+function fetchWeather() {
+    const apiKey = 'YOUR_API_KEY'; // Replace with your OpenWeatherMap API key
+    const city = 'Duhok';
+    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            displayWeather(data);
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+            document.getElementById('weather-info').innerHTML = '<p>Failed to load weather data.</p>';
+        });
+}
+
+// Function to display weather data
+function displayWeather(data) {
+    const weatherInfo = document.getElementById('weather-info');
+    weatherInfo.innerHTML = ''; // Clear loading message
+
+    // Group forecasts by day
+    const dailyForecasts = {};
+    data.list.forEach(forecast => {
+        const date = forecast.dt_txt.split(' ')[0];
+        if (!dailyForecasts[date]) {
+            dailyForecasts[date] = [];
+        }
+        dailyForecasts[date].push(forecast);
+    });
+
+    // Display the next 3 days
+    const days = Object.keys(dailyForecasts).slice(0, 3);
+    days.forEach(day => {
+        const dayForecasts = dailyForecasts[day];
+        const date = new Date(day).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const tempMin = Math.min(...dayForecasts.map(f => f.main.temp_min));
+        const tempMax = Math.max(...dayForecasts.map(f => f.main.temp_max));
+        const weatherDescription = dayForecasts[0].weather[0].description;
+
+        const dayWeather = document.createElement('div');
+        dayWeather.className = 'day-weather';
+        dayWeather.innerHTML = `
+            <h3>${date}</h3>
+            <p>${weatherDescription}</p>
+            <p>Temperature: ${tempMin}°C - ${tempMax}°C</p>
+        `;
+        weatherInfo.appendChild(dayWeather);
+    });
+}
+
+// Fetch weather data when the page loads
+fetchWeather();
 
 // Add event listeners to language switcher dropdown
 document.querySelectorAll('.language-option').forEach(button => {
@@ -248,3 +282,18 @@ function loadPostsFromLocalStorage() {
 
 // Load posts from local storage on page load
 loadPostsFromLocalStorage();
+
+// Image Slider Functionality
+let slideIndex = 0;
+const slides = document.querySelector('.slides');
+const totalSlides = document.querySelectorAll('.slide').length;
+
+function moveSlide(n) {
+    slideIndex += n;
+    if (slideIndex < 0) slideIndex = totalSlides - 1;
+    else if (slideIndex >= totalSlides) slideIndex = 0;
+    slides.style.transform = `translateX(${-slideIndex * 100}%)`;
+}
+
+// Auto-slide every 5 seconds
+setInterval(() => moveSlide(1), 5000);
