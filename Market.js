@@ -147,47 +147,6 @@ changeLanguage("en");
 // Update Footer Year Dynamically
 document.getElementById("footer-year").textContent = new Date().getFullYear();
 
-// News Slider Functionality (Image-Only)
-let currentSlide = 0;
-const slides = document.querySelector('.news-slider .slides');
-const totalSlides = slides.children.length;
-
-function showSlide(index) {
-    if (index < 0) {
-        currentSlide = totalSlides - 1;
-    } else if (index >= totalSlides) {
-        currentSlide = 0;
-    } else {
-        currentSlide = index;
-    }
-    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-}
-
-document.getElementById('prev-slide').addEventListener('click', () => {
-    showSlide(currentSlide - 1);
-});
-
-document.getElementById('next-slide').addEventListener('click', () => {
-    showSlide(currentSlide + 1);
-});
-
-// Auto-slide every 5 seconds
-let slideInterval = setInterval(() => {
-    showSlide(currentSlide + 1);
-}, 5000);
-
-// Pause auto-slide on hover
-const newsSlider = document.querySelector('.news-slider');
-newsSlider.addEventListener('mouseenter', () => {
-    clearInterval(slideInterval);
-});
-
-newsSlider.addEventListener('mouseleave', () => {
-    slideInterval = setInterval(() => {
-        showSlide(currentSlide + 1);
-    }, 5000);
-});
-
 // Handle Post Submission
 document.getElementById('post-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -266,7 +225,6 @@ function savePostToLocalStorage(title, content, mediaFile) {
     posts.push(post);
     localStorage.setItem('posts', JSON.stringify(posts));
 }
-
 
 // Load Posts from Local Storage
 function loadPostsFromLocalStorage() {
