@@ -105,7 +105,7 @@ nav ul li a:hover {
     z-index: 1;
 }
 
-/* News Slider Section (Image-Only) */
+/* Moving Text Bar (Ticker) Section */
 #news {
     padding: 40px 20px;
     background-color: #fff;
@@ -119,58 +119,37 @@ nav ul li a:hover {
     color: #2d87f0;
 }
 
-.news-slider {
+.news-ticker {
     width: 100%;
     overflow: hidden;
-    position: relative;
+    white-space: nowrap;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px 0;
     margin: 20px 0;
 }
 
-.news-slider .slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
+.news-ticker .ticker-content {
+    display: inline-block;
+    padding-left: 100%; /* Start off-screen */
+    animation: ticker-scroll 20s linear infinite;
 }
 
-.news-slider .slide {
-    min-width: 100%;
-    box-sizing: border-box;
-    text-align: center;
+.news-ticker .ticker-content p {
+    display: inline-block;
+    margin: 0 20px;
+    font-size: 16px;
+    color: #333;
 }
 
-.news-slider .slide img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    max-height: 400px; /* Adjust as needed */
-    object-fit: cover;
-}
-
-.news-slider .controls {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%);
-}
-
-.news-slider .controls button {
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s ease;
-}
-
-.news-slider .controls button:hover {
-    background: rgba(0, 0, 0, 0.8);
+@keyframes ticker-scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 /* Products Section */
@@ -568,10 +547,6 @@ footer p {
     #posts li p {
         font-size: 14px;
     }
-
-    .news-slider .slide img {
-        max-height: 300px; /* Adjust for smaller screens */
-    }
 }
 
 @media (max-width: 480px) {
@@ -636,9 +611,5 @@ footer p {
 
     #posts li p {
         font-size: 12px;
-    }
-
-    .news-slider .slide img {
-        max-height: 250px; /* Adjust for smaller screens */
     }
 }
