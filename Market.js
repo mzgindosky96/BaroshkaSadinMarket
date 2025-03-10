@@ -223,6 +223,31 @@ document.getElementById('post-form').addEventListener('submit', function (e) {
     document.getElementById('post-form').reset();
 });
 
+// Visitor Counter and Online Users Tracker
+document.addEventListener("DOMContentLoaded", function () {
+    // Retrieve or initialize visitor count from localStorage
+    let visitorCount = localStorage.getItem("visitorCount") || 0;
+    visitorCount = parseInt(visitorCount) + 1; // Increment visitor count
+    localStorage.setItem("visitorCount", visitorCount); // Save updated count
+    document.getElementById("visitor-count").textContent = visitorCount;
+
+    // Online Users Tracker
+    let onlineUsers = localStorage.getItem("onlineUsers") || 0;
+    onlineUsers = parseInt(onlineUsers);
+
+    // Simulate online users (for demonstration purposes)
+    // In a real-world scenario, this should be handled by a backend service
+    function updateOnlineUsers() {
+        onlineUsers = Math.floor(Math.random() * 100); // Random number for demo
+        localStorage.setItem("onlineUsers", onlineUsers);
+        document.getElementById("online-users").textContent = onlineUsers;
+    }
+
+    // Update online users every 5 seconds
+    setInterval(updateOnlineUsers, 5000);
+    updateOnlineUsers(); // Initial call
+});
+
 // Save Posts to Local Storage
 function savePostToLocalStorage(title, content, mediaFile) {
     const posts = JSON.parse(localStorage.getItem('posts')) || [];
@@ -241,6 +266,7 @@ function savePostToLocalStorage(title, content, mediaFile) {
     posts.push(post);
     localStorage.setItem('posts', JSON.stringify(posts));
 }
+
 
 // Load Posts from Local Storage
 function loadPostsFromLocalStorage() {
