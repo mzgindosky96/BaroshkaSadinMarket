@@ -11,53 +11,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="Market.css">
     <style>
-        /* Additional CSS for the News Slider */
-        .news-slider {
+        /* Additional CSS for the Moving Text Bar */
+        .news-ticker {
             width: 100%;
             overflow: hidden;
-            position: relative;
+            white-space: nowrap;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px 0;
             margin: 20px 0;
         }
-        .news-slider .slides {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
+        .news-ticker .ticker-content {
+            display: inline-block;
+            padding-left: 100%; /* Start off-screen */
+            animation: ticker-scroll 60s linear infinite;
         }
-        .news-slider .slide {
-            min-width: 100%;
-            box-sizing: border-box;
-            text-align: center;
+        .news-ticker .ticker-content p {
+            display: inline-block;
+            margin: 0 20px;
+            font-size: 16px;
+            color: #333;
         }
-        .news-slider .slide img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            max-height: 400px; /* Adjust as needed */
-            object-fit: cover;
-        }
-        .news-slider .controls {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-        }
-        .news-slider .controls button {
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-        }
-        .news-slider .controls button:hover {
-            background: rgba(0, 0, 0, 0.8);
+        @keyframes ticker-scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
     </style>
 </head>
@@ -91,24 +73,14 @@
         <p id="hero-description">Find everything you need at our market.</p>
     </section>
 
-    <!-- News Slider Section (Image-Only) -->
+    <!-- Moving Text Bar Section -->
     <section id="news">
         <h2 id="news-title">News & Updates</h2>
-        <div class="news-slider">
-            <div class="slides">
-                <div class="slide">
-                    <img src="new-arrivals.jpg" alt="New Arrivals">
-                </div>
-                <div class="slide">
-                    <img src="special-discounts.jpg" alt="Special Discounts">
-                </div>
-                <div class="slide">
-                    <img src="holiday-hours.jpg" alt="Holiday Hours">
-                </div>
-            </div>
-            <div class="controls">
-                <button id="prev-slide">&lt;</button>
-                <button id="next-slide">&gt;</button>
+        <div class="news-ticker">
+            <div class="ticker-content">
+                <p>Karten Korek Zain Asia Fastling Itunes GooglePlay UC PUBG Bardastn.</p>
+                <p>Hami joren vaxarnen heze bardastn</p>
+                <p>Dkan L damjmer 9 spede hata 2 shave vakrya</p>
             </div>
         </div>
     </section>
@@ -340,47 +312,6 @@
 
         // Update Footer Year Dynamically
         document.getElementById("footer-year").textContent = new Date().getFullYear();
-
-        // News Slider Functionality (Image-Only)
-        let currentSlide = 0;
-        const slides = document.querySelector('.news-slider .slides');
-        const totalSlides = slides.children.length;
-
-        function showSlide(index) {
-            if (index < 0) {
-                currentSlide = totalSlides - 1;
-            } else if (index >= totalSlides) {
-                currentSlide = 0;
-            } else {
-                currentSlide = index;
-            }
-            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
-
-        document.getElementById('prev-slide').addEventListener('click', () => {
-            showSlide(currentSlide - 1);
-        });
-
-        document.getElementById('next-slide').addEventListener('click', () => {
-            showSlide(currentSlide + 1);
-        });
-
-        // Auto-slide every 5 seconds
-        let slideInterval = setInterval(() => {
-            showSlide(currentSlide + 1);
-        }, 5000);
-
-        // Pause auto-slide on hover
-        const newsSlider = document.querySelector('.news-slider');
-        newsSlider.addEventListener('mouseenter', () => {
-            clearInterval(slideInterval);
-        });
-
-        newsSlider.addEventListener('mouseleave', () => {
-            slideInterval = setInterval(() => {
-                showSlide(currentSlide + 1);
-            }, 5000);
-        });
     </script>
 </body>
 </html>
