@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -175,7 +176,7 @@
  
     <!-- Weather Section -->
     <section id="weather">
-        <h2 id="weather-title">Weather in Duhok City</h2>
+        <h2 id="weather-title">3-Day Weather Forecast for Duhok City</h2>
         <div id="weather-info">
             <p>Loading weather data...</p>
         </div>
@@ -186,24 +187,39 @@
         const apiKey = 'Bw1Vv1Wl7kkvghyCYTANnWqBXDwJ3p8D'; // Your API key
         const locationKey = '103735'; // Location key for Duhok, Iraq
 
-        // Fetch weather data from AccuWeather API
-        async function fetchWeather() {
-            const url = `https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}`;
+        // Fetch 3-day weather forecast from AccuWeather API
+        async function fetchWeatherForecast() {
+            const url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}&metric=true`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
 
-                if (data && data.length > 0) {
-                    const weather = data[0];
-                    const temperature = weather.Temperature.Metric.Value;
-                    const weatherText = weather.WeatherText;
+                if (data && data.DailyForecasts) {
+                    const forecasts = data.DailyForecasts.slice(0, 3); // Get only the first 3 days
+                    let forecastHTML = '';
+
+                    forecasts.forEach((forecast, index) => {
+                        const date = new Date(forecast.Date).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+                        const minTemp = forecast.Temperature.Minimum.Value;
+                        const maxTemp = forecast.Temperature.Maximum.Value;
+                        const dayCondition = forecast.Day.IconPhrase;
+                        const nightCondition = forecast.Night.IconPhrase;
+                        const dayIcon = forecast.Day.Icon;
+                        const nightIcon = forecast.Night.Icon;
+
+                        forecastHTML += `
+                            <div class="day-forecast">
+                                <h3>${date}</h3>
+                                <p><strong>Day:</strong> ${dayCondition} <img class="weather-icon" src="https://developer.accuweather.com/sites/default/files/${dayIcon < 10 ? '0' + dayIcon : dayIcon}-s.png" alt="${dayCondition}"></p>
+                                <p><strong>Night:</strong> ${nightCondition} <img class="weather-icon" src="https://developer.accuweather.com/sites/default/files/${nightIcon < 10 ? '0' + nightIcon : nightIcon}-s.png" alt="${nightCondition}"></p>
+                                <p><strong>Temperature:</strong> ${minTemp}°C (Min) / ${maxTemp}°C (Max)</p>
+                            </div>
+                        `;
+                    });
 
                     // Update the weather section
-                    document.getElementById('weather-info').innerHTML = `
-                        <p><strong>Condition:</strong> ${weatherText}</p>
-                        <p><strong>Temperature:</strong> ${temperature}°C</p>
-                    `;
+                    document.getElementById('weather-info').innerHTML = forecastHTML;
                 } else {
                     document.getElementById('weather-info').innerHTML = `<p>Weather data not available.</p>`;
                 }
@@ -213,8 +229,8 @@
             }
         }
 
-        // Call the function to fetch and display weather
-        fetchWeather();
+        // Call the function to fetch and display weather forecast
+        fetchWeatherForecast();
     </script>
 
 
