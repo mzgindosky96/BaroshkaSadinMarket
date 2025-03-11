@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,7 +99,6 @@
                 <li><a href="#products" id="nav-products">Products</a></li>
                 <li><a href="#about" id="nav-about">About Us</a></li>
                 <li><a href="#contact" id="nav-contact">Contact</a></li>
-                <li><a href="#post" id="nav-post">Post</a></li>
             </ul>
         </nav>
     </header>
@@ -130,7 +127,6 @@
                 <div class="slide">
                     <img src="image7.jpeg" alt="Slide 2">
                 </div>
-
                 <div class="slide">
                     <img src="image2.jpeg" alt="Slide 3">
                 </div>
@@ -150,23 +146,12 @@
             </div>
         </div>
     </section>
+  <section id="news">
+        <h2 id="news-title">Market Prices</h2>
+        
+<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQumS0szmvzgaEp2Uinw_4oJ9GC9CGjSo170NToFOy1phmaCl4Zg668dDk8yAY385FV2yJ16OivWrmC/pubhtml?widget=true&amp;headers=false"></iframe>
 
-    <section id="post">
-        <h2 id="post-title">Create a Post</h2>
-        <form id="post-form" enctype="multipart/form-data">
-            <label for="post-title-input">Title:</label>
-            <input type="text" id="post-title-input" name="post-title" required>
-            <label for="post-content">Content:</label>
-            <textarea id="post-content" name="post-content" rows="4" required></textarea>
-            <label for="post-media">Upload Media (Image/Video):</label>
-            <input type="file" id="post-media" name="media" accept="image/*, video/*">
-            <button type="submit">Submit Post</button>
-        </form>
-        <div id="post-list">
-            <h3>Recent Posts</h3>
-            <ul id="posts"></ul>
-        </div>
-    </section>
+</section>
 
     <section id="products">
         <h2 id="products-title">Our Products</h2>
@@ -185,72 +170,7 @@
             </div>
         </div>
     </section>
- 
-   <title>پێشبینیی هەوا</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
 
-        #weather {
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: 20px auto;
-        }
-
-        #weather-title {
-            text-align: center;
-            color: #2c3e50;
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0 auto;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #2980b9;
-            color: white;
-            font-size: 1.1em;
-        }
-
-        td {
-            background-color: #e9f5ff;
-            color: #34495e;
-        }
-
-        .weather-icon {
-            width: 30px;
-            height: 30px;
-            vertical-align: middle;
-        }
-
-        @media (max-width: 768px) {
-            th, td {
-                padding: 8px;
-                font-size: 0.9em;
-            }
-        }
-    </style>
-</head>
-<body>
     <!-- Weather Section -->
     <section id="weather">
         <h2 id="weather-title">پێشبینیی هەوا بۆ ٣ ڕۆژی داهاتووی شاری دهۆک</h2>
@@ -258,73 +178,6 @@
             <p>چاوەڕوانی زانیاریی هەوا...</p>
         </div>
     </section>
-
-    <script>
-        // AccuWeather API key and Duhok's location key
-        const apiKey = 'Bw1Vv1Wl7kkvghyCYTANnWqBXDwJ3p8D'; // Your API key
-        const locationKey = '103735'; // Location key for Duhok, Iraq
-
-        // Fetch 3-day weather forecast from AccuWeather API
-        async function fetchWeatherForecast() {
-            const url = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}&metric=true`;
-
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-
-                if (data && data.DailyForecasts) {
-                    const forecasts = data.DailyForecasts.slice(0, 3); // Get only the first 3 days
-                    let forecastHTML = `
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>بەروار</th>
-                                    <th>بارودۆخی ڕۆژ</th>
-                                    <th>بارودۆخی شەو</th>
-                                    <th>پلەی گەرمی</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                    `;
-
-                    forecasts.forEach((forecast) => {
-                        const date = new Date(forecast.Date).toLocaleDateString('ku', { weekday: 'long', month: 'short', day: 'numeric' });
-                        const minTemp = forecast.Temperature.Minimum.Value;
-                        const maxTemp = forecast.Temperature.Maximum.Value;
-                        const dayCondition = forecast.Day.IconPhrase;
-                        const nightCondition = forecast.Night.IconPhrase;
-                        const dayIcon = forecast.Day.Icon;
-                        const nightIcon = forecast.Night.Icon;
-
-                        forecastHTML += `
-                            <tr>
-                                <td>${date}</td>
-                                <td>${dayCondition} <img class="weather-icon" src="https://developer.accuweather.com/sites/default/files/${dayIcon < 10 ? '0' + dayIcon : dayIcon}-s.png" alt="${dayCondition}"></td>
-                                <td>${nightCondition} <img class="weather-icon" src="https://developer.accuweather.com/sites/default/files/${nightIcon < 10 ? '0' + nightIcon : nightIcon}-s.png" alt="${nightCondition}"></td>
-                                <td>${minTemp}°C (کەم) / ${maxTemp}°C (زۆر)</td>
-                            </tr>
-                        `;
-                    });
-
-                    forecastHTML += `
-                            </tbody>
-                        </table>
-                    `;
-
-                    // Update the weather section
-                    document.getElementById('weather-info').innerHTML = forecastHTML;
-                } else {
-                    document.getElementById('weather-info').innerHTML = `<p>زانیاریی هەوا بەردەست نییە.</p>`;
-                }
-            } catch (error) {
-                console.error('هەڵە لە وەرگرتنی زانیاریی هەوا:', error);
-                document.getElementById('weather-info').innerHTML = `<p>سەرکەوتوو نەبوو لە بارکردنی زانیاریی هەوا.</p>`;
-            }
-        }
-
-        // Call the function to fetch and display weather forecast
-        fetchWeatherForecast();
-    </script>
 
     <!-- About Section -->
     <section id="about">
@@ -407,19 +260,12 @@
                 navProducts: "Products",
                 navAbout: "About Us",
                 navContact: "Contact",
-                navPost: "Post",
                 heroTitle: "Welcome to Baroshka Sa'din Market!",
                 heroDescription: "Find everything you need at our market.",
                 productsTitle: "Our Products",
                 aboutTitle: "About Us",
                 aboutDescription: "Baroshka Sa'din Market has been serving the community for over 2 years. We are committed to providing fresh, high-quality products at affordable prices. Our friendly staff is always here to help you find what you need.",
-                contactTitle: "Contact Us",
-                postTitle: "Create a Post",
-                postSubmit: "Submit Post",
-                postListTitle: "Recent Posts",
-                postPlaceholderTitle: "Enter post title",
-                postPlaceholderContent: "Write your post here...",
-                postMediaLabel: "Upload Media (Image/Video):",
+                contactTitle: "Contact Us"
             },
             ku: {
                 welcomeMessage: "Bxerbhen bo Baroshka Sa'din Market! Bdlexo bazarbka.",
@@ -429,19 +275,12 @@
                 navProducts: "Barham",
                 navAbout: "About Us",
                 navContact: "Paywandikrn",
-                navPost: "Post",
                 heroTitle: "Bxerbhen bo Baroshka Sa'din Market!",
                 heroDescription: "har tshtaki dle ta bxazet ye l markete hay.",
                 productsTitle: "Barhamen Ma",
                 aboutTitle: "About Us",
                 aboutDescription: "Baroshka Sa'din Market has been serving the community for over 2 years. We are committed to providing fresh, high-quality products at affordable prices. Our friendly staff is always here to help you find what you need.",
-                contactTitle: "Paywandikrn",
-                postTitle: "Postekê Biafirîne",
-                postSubmit: "Postê bişîne",
-                postListTitle: "Postên Dawî",
-                postPlaceholderTitle: "Sernavê postê binivîse",
-                postPlaceholderContent: "Posta xwe li vir binivîse...",
-                postMediaLabel: "Medya bar bike (Wêne/Vîdeo):",
+                contactTitle: "Paywandikrn"
             },
             ar: {
                 welcomeMessage: "مرحبًا بكم في سوق باروشكا سعدين! استمتع بالتسوق.",
@@ -451,19 +290,12 @@
                 navProducts: "المنتجات",
                 navAbout: "من نحن",
                 navContact: "اتصل بنا",
-                navPost: "نشر",
                 heroTitle: "مرحبًا بكم في سوق باروشكا سعدين!",
                 heroDescription: "ابحث عن كل ما تحتاجه في سوقنا.",
                 productsTitle: "منتجاتنا",
                 aboutTitle: "من نحن",
                 aboutDescription: "سوق باروشكا سعدين يخدم المجتمع منذ أكثر من عامين. نحن ملتزمون بتوفير منتجات طازجة وعالية الجودة بأسعار معقولة. فريق العمل الودود لدينا دائمًا هنا لمساعدتك في العثور على ما تحتاجه.",
-                contactTitle: "اتصل بنا",
-                postTitle: "إنشاء منشور",
-                postSubmit: "إرسال المنشور",
-                postListTitle: "المنشورات الأخيرة",
-                postPlaceholderTitle: "أدخل عنوان المنشور",
-                postPlaceholderContent: "اكتب منشورك هنا...",
-                postMediaLabel: "رفع ملف (صورة/فيديو):",
+                contactTitle: "اتصل بنا"
             }
         };
 
