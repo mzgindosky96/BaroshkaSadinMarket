@@ -1,12 +1,11 @@
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3032189625676969"
-     crossorigin="anonymous"></script>
- 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3032189625676969"
+        crossorigin="anonymous"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -91,7 +90,6 @@
     </style>
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <div class="logo">
             <h1 id="market-name" class="decorative-title">Baroshka Sa'din Market</h1>
@@ -108,7 +106,6 @@
         </nav>
     </header>
 
-    <!-- Hero Section with Image Slider -->
     <section id="home" class="hero">
         <div class="slider">
             <div class="slides">
@@ -118,19 +115,19 @@
                 <div class="slide">
                     <img src="image1.jpeg" alt="Slide 2">
                 </div>
- <div class="slide">
+                <div class="slide">
                     <img src="image3.jpeg" alt="Slide 2">
                 </div>
- <div class="slide">
+                <div class="slide">
                     <img src="image4.jpeg" alt="Slide 2">
                 </div>
- <div class="slide">
+                <div class="slide">
                     <img src="image5.jpeg" alt="Slide 2">
                 </div>
- <div class="slide">
+                <div class="slide">
                     <img src="image6.jpeg" alt="Slide 2">
                 </div>
- <div class="slide">
+                <div class="slide">
                     <img src="image7.jpeg" alt="Slide 2">
                 </div>
 
@@ -143,7 +140,6 @@
         </div>
     </section>
 
-    <!-- Moving Text Bar Section -->
     <section id="news">
         <h2 id="news-title">News & Updates</h2>
         <div class="news-ticker">
@@ -155,7 +151,23 @@
         </div>
     </section>
 
-    <!-- Products Section -->
+    <section id="post">
+        <h2 id="post-title">Create a Post</h2>
+        <form id="post-form" enctype="multipart/form-data">
+            <label for="post-title-input">Title:</label>
+            <input type="text" id="post-title-input" name="post-title" required>
+            <label for="post-content">Content:</label>
+            <textarea id="post-content" name="post-content" rows="4" required></textarea>
+            <label for="post-media">Upload Media (Image/Video):</label>
+            <input type="file" id="post-media" name="media" accept="image/*, video/*">
+            <button type="submit">Submit Post</button>
+        </form>
+        <div id="post-list">
+            <h3>Recent Posts</h3>
+            <ul id="posts"></ul>
+        </div>
+    </section>
+
     <section id="products">
         <h2 id="products-title">Our Products</h2>
         <div class="product-list">
@@ -328,24 +340,6 @@
         <p>Address: Baste Road, Duhok, Iraq</p>
     </section>
 
-    <!-- Post Section -->
-    <section id="post">
-        <h2 id="post-title">Create a Post</h2>
-        <form id="post-form" enctype="multipart/form-data">
-            <label for="post-title-input">Title:</label>
-            <input type="text" id="post-title-input" name="post-title" required>
-            <label for="post-content">Content:</label>
-            <textarea id="post-content" name="post-content" rows="4" required></textarea>
-            <label for="post-media">Upload Media (Image/Video):</label>
-            <input type="file" id="post-media" name="media" accept="image/*, video/*">
-            <button type="submit">Submit Post</button>
-        </form>
-        <div id="post-list">
-            <h3>Recent Posts</h3>
-            <ul id="posts"></ul>
-        </div>
-    </section>
-
     <!-- Footer Section -->
     <footer>
         <div id="stats">
@@ -477,27 +471,6 @@
         function changeLanguage(lang) {
             const data = languageData[lang];
             if (!data) return;
-
-            // Update all elements with language-specific content
-            document.getElementById("market-name").textContent = data.marketName;
-            document.getElementById("market-tagline").textContent = data.marketTagline;
-            document.getElementById("nav-home").textContent = data.navHome;
-            document.getElementById("nav-products").textContent = data.navProducts;
-            document.getElementById("nav-about").textContent = data.navAbout;
-            document.getElementById("nav-contact").textContent = data.navContact;
-            document.getElementById("nav-post").textContent = data.navPost;
-            document.getElementById("hero-title").textContent = data.heroTitle;
-            document.getElementById("hero-description").textContent = data.heroDescription;
-            document.getElementById("products-title").textContent = data.productsTitle;
-            document.getElementById("about-title").textContent = data.aboutTitle;
-            document.getElementById("about-description").textContent = data.aboutDescription;
-            document.getElementById("contact-title").textContent = data.contactTitle;
-            document.getElementById("post-title").textContent = data.postTitle;
-            document.querySelector("#post-form button").textContent = data.postSubmit;
-            document.querySelector("#post-list h3").textContent = data.postListTitle;
-            document.getElementById("post-title-input").placeholder = data.postPlaceholderTitle;
-            document.getElementById("post-content").placeholder = data.postPlaceholderContent;
-            document.querySelector('label[for="post-media"]').textContent = data.postMediaLabel;
 
             // Update the selected language text in the dropdown
             document.getElementById("selected-language").textContent = data.navHome;
