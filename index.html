@@ -174,11 +174,76 @@
         </div>
     </section>
  
+   <title>پێشبینیی هەوا</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        #weather {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        #weather-title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #2980b9;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        td {
+            background-color: #e9f5ff;
+            color: #34495e;
+        }
+
+        .weather-icon {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            th, td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
     <!-- Weather Section -->
     <section id="weather">
-        <h2 id="weather-title">3-Day Weather Forecast for Duhok City</h2>
+        <h2 id="weather-title">پێشبینیی هەوا بۆ ٣ ڕۆژی داهاتووی شاری دهۆک</h2>
         <div id="weather-info">
-            <p>Loading weather data...</p>
+            <p>چاوەڕوانی زانیاریی هەوا...</p>
         </div>
     </section>
 
@@ -197,10 +262,21 @@
 
                 if (data && data.DailyForecasts) {
                     const forecasts = data.DailyForecasts.slice(0, 3); // Get only the first 3 days
-                    let forecastHTML = '';
+                    let forecastHTML = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>بەروار</th>
+                                    <th>بارودۆخی ڕۆژ</th>
+                                    <th>بارودۆخی شەو</th>
+                                    <th>پلەی گەرمی</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
 
-                    forecasts.forEach((forecast, index) => {
-                        const date = new Date(forecast.Date).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+                    forecasts.forEach((forecast) => {
+                        const date = new Date(forecast.Date).toLocaleDateString('ku', { weekday: 'long', month: 'short', day: 'numeric' });
                         const minTemp = forecast.Temperature.Minimum.Value;
                         const maxTemp = forecast.Temperature.Maximum.Value;
                         const dayCondition = forecast.Day.IconPhrase;
@@ -209,30 +285,34 @@
                         const nightIcon = forecast.Night.Icon;
 
                         forecastHTML += `
-                            <div class="day-forecast">
-                                <h3>${date}</h3>
-                                <p><strong>Day:</strong> ${dayCondition} <img class="weather-icon" src="https://developer.accuweather.com/sites/default/files/${dayIcon < 10 ? '0' + dayIcon : dayIcon}-s.png" alt="${dayCondition}"></p>
-                                <p><strong>Night:</strong> ${nightCondition} <img class="weather-icon" src="https://developer.accuweather.com/sites/default/files/${nightIcon < 10 ? '0' + nightIcon : nightIcon}-s.png" alt="${nightCondition}"></p>
-                                <p><strong>Temperature:</strong> ${minTemp}°C (Min) / ${maxTemp}°C (Max)</p>
-                            </div>
+                            <tr>
+                                <td>${date}</td>
+                                <td>${dayCondition} <img class="weather-icon" src="https://developer.accuweather.com/sites/default/files/${dayIcon < 10 ? '0' + dayIcon : dayIcon}-s.png" alt="${dayCondition}"></td>
+                                <td>${nightCondition} <img class="weather-icon" src="https://developer.accuweather.com/sites/default/files/${nightIcon < 10 ? '0' + nightIcon : nightIcon}-s.png" alt="${nightCondition}"></td>
+                                <td>${minTemp}°C (کەم) / ${maxTemp}°C (زۆر)</td>
+                            </tr>
                         `;
                     });
+
+                    forecastHTML += `
+                            </tbody>
+                        </table>
+                    `;
 
                     // Update the weather section
                     document.getElementById('weather-info').innerHTML = forecastHTML;
                 } else {
-                    document.getElementById('weather-info').innerHTML = `<p>Weather data not available.</p>`;
+                    document.getElementById('weather-info').innerHTML = `<p>زانیاریی هەوا بەردەست نییە.</p>`;
                 }
             } catch (error) {
-                console.error('Error fetching weather data:', error);
-                document.getElementById('weather-info').innerHTML = `<p>Failed to load weather data.</p>`;
+                console.error('هەڵە لە وەرگرتنی زانیاریی هەوا:', error);
+                document.getElementById('weather-info').innerHTML = `<p>سەرکەوتوو نەبوو لە بارکردنی زانیاریی هەوا.</p>`;
             }
         }
 
         // Call the function to fetch and display weather forecast
         fetchWeatherForecast();
     </script>
-
 
     <!-- About Section -->
     <section id="about">
