@@ -146,12 +146,93 @@
             </div>
         </div>
     </section>
-  <section id="news">
-        <h2 id="news-title">Market Prices</h2>
-        
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQumS0szmvzgaEp2Uinw_4oJ9GC9CGjSo170NToFOy1phmaCl4Zg668dDk8yAY385FV2yJ16OivWrmC/pubhtml?widget=true&amp;headers=false"></iframe>
-
+  <!-- Updated Prices Section -->
+<section id="prices">
+    <h2 id="prices-title">Market Prices</h2>
+    <div class="prices-container">
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQumS0szmvzgaEp2Uinw_4oJ9GC9CGjSo170NToFOy1phmaCl4Zg668dDk8yAY385FV2yJ16OivWrmC/pubhtml?widget=true&amp;headers=false"></iframe>
+    </div>
 </section>
+
+<style>
+    /* Prices Section Styles */
+    #prices {
+        width: 100%;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 30px 20px;
+        background: linear-gradient(145deg, #f8f9fa 0%, #ffffff 100%);
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    #prices:hover {
+        transform: translateY(-5px);
+    }
+
+    #prices-title {
+        text-align: center;
+        font-size: 2.5em;
+        color: #2c3e50;
+        margin-bottom: 30px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    #prices-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 3px;
+        background: #3498db;
+    }
+
+    .prices-container {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 12px;
+        background: white;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .prices-container iframe {
+        width: 100%;
+        height: 600px;
+        border: none;
+        min-height: 400px;
+        overflow-y: auto;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        #prices {
+            margin: 20px auto;
+            padding: 20px 15px;
+        }
+
+        #prices-title {
+            font-size: 2em;
+        }
+
+        .prices-container iframe {
+            height: 400px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #prices-title {
+            font-size: 1.8em;
+        }
+
+        .prices-container iframe {
+            height: 350px;
+        }
+    }
+</style>
 
     <section id="products">
         <h2 id="products-title">Our Products</h2>
