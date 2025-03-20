@@ -94,7 +94,7 @@ window.addEventListener('load', () => {
 async function fetchWeather() {
     const apiKey = "Bw1Vv1Wl7kkvghyCYTANnWqBXDwJ3p8D"; // Your API key
     const locationKey = "208947"; // Location Key for Duhok, Iraq
-    const url = `https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&details=true`;
+    const url = `https://dataservice.accuweather.com/currentconditions/v1/${208947}?apikey=${Bw1Vv1Wl7kkvghyCYTANnWqBXDwJ3p8D}&details=true`;
 
     try {
         const response = await fetch(url);
