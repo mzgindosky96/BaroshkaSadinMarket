@@ -89,9 +89,6 @@ window.addEventListener('load', () => {
     languageSelect.value = defaultLanguage;
     languageSelect.dispatchEvent(new Event('change'));
 
-    // Fetch weather data
-    fetchWeather();
-});
 
 // Fetch Weather Data
 async function fetchWeather() {
