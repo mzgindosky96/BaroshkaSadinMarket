@@ -6,7 +6,7 @@ $password = "";
 $dbname = "baroshka saadin market";
 
 // Create connection
-$conn = new mysqli($localhost, $root, $, $products);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
@@ -20,10 +20,10 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo "<div class='product-card'>
-                <img src='" . $row['image'] . "' alt='" . $row['name'] . "'>
-                <h3>" . $row['name'] . "</h3>
-                <p>" . $row['description'] . "</p>
-                <p>Price: $" . $row['price'] . "</p>
+                <img src='" . htmlspecialchars($row['image']) . "' alt='" . htmlspecialchars($row['name']) . "'>
+                <h3>" . htmlspecialchars($row['name']) . "</h3>
+                <p>" . htmlspecialchars($row['description']) . "</p>
+                <p>Price: $" . number_format((float)$row['price'], 2) . "</p>
               </div>";
     }
 } else {
