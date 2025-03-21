@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baroshka Sa'din Market</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+
+<header>
+    <h1>Baroshka Sa'din Market</h1>
+    <nav>
+        <a href="#upload-gallery">Upload & Gallery</a>
+        <a href="#weather">Weather</a>
+        <a href="#prices">Prices</a>
+        <a href="#map">Map & Navigation</a>
+    </nav>
+</header>
+
+<marquee behavior="scroll" direction="left">🌟 New Items: Organic Avocados, Fresh Berries, Whole Grain Bread! 🌟</marquee>
+
+<section id="upload-gallery">
+    <h2>Upload Photos or Videos</h2>
+    <form id="upload-form">
+        <input type="file" id="file-input" accept="image/*,video/*" multiple>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="upload-status"></div>
+    <h3>Media Gallery</h3>
+    <div id="media-gallery" class="media-gallery"></div>
+</section>
+
+<section id="weather">
+    <h2>3-Day Weather Forecast for Dahuk, IQ</h2>
+    <div id="weather-forecast" class="weather-forecast"></div>
+</section>
+
+<section id="prices">
+    <h2>Item Prices</h2>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td>Apples (1 kg)</td>
+            <td>$3.00</td>
+        </tr>
+        <tr>
+            <td>Bananas (1 kg)</td>
+            <td>$2.50</td>
+        </tr>
+        <tr>
+            <td>Bread (1 loaf)</td>
+            <td>$1.50</td>
+        </tr>
+        <tr>
+            <td>Milk (1 liter)</td>
+            <td>$1.00</td>
+        </tr>
+        <tr>
+            <td>Eggs (dozen)</td>
+            <td>$2.00</td>
+        </tr>
+        <tr>
+            <td>Organic Avocados (each)</td>
+            <td>$1.50</td>
+        </tr>
+        <tr>
+            <td>Fresh Berries (250g)</td>
+            <td>$4.00</td>
+        </tr>
+        <tr>
+            <td>Whole Grain Bread (1 loaf)</td>
+            <td>$2.00</td>
+        </tr>
+    </table>
+</section>
+
+<section id="map">
+    <h2>Map & Navigation</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d676.2694218434772!2d43.07738791773344!3d37.06669808670068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4008c30061a3ec1f%3A0x76d2ec4e6d152d4f!2z2KjblSDYsdmI2LTaqdin2LPYudiv24zZhiDZhdin2LHZg9uO2Ko!5e0!3m2!1sar!2siq!4v1742573259399!5m2!1sar!2siq" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</section>
+
+<section id="visitor-counter">
+    <h2>Visitor Counter</h2>
+    <p>Total Visitors: <span id="total-visitors">0</span></p>
+    <p>Online Now: <span id="online-count">0</span></p>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <h2>About Us & Location</h2>
+        <p>Welcome to Baroshka Sa'din Market! We offer a wide variety of fresh produce, groceries, and household items at competitive prices. Our mission is to provide quality products and excellent customer service to our community.</p>
+        <p>We are located at Baste Road, Duhok, Iraq. Come visit us for all your shopping needs!</p>
+        <p>Email: <a href="mailto:baroshkasaadinmarket@gmail.com">baroshkasaadinmarket@gmail.com</a></p>
+        <p>Phone: <a href="tel:+9647518865929">+9647518865929</a></p>
+    </div>
+    <p>&copy; 2023 Baroshka Sa'din Market. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script> <!-- Link to the JavaScript file -->
+</body>
+</html>
