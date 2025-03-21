@@ -136,23 +136,251 @@ body {
 }
 
 /* Weather Section */
-.weather-widget {
-    background-color: #f0f8ff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 400px;
-    margin: 20px auto;
+.forecast-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.forecast-day {
+    background: var(--text-light);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transform: translateY(0);
+    animation: fadeIn 0.6s ease-out;
 }
 
-.weather-widget p {
+.forecast-day:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.forecast-date {
+    color: var(--dark-bg);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.weather-icon {
+    font-size: 3rem;
+    margin: 1rem 0;
+    color: var(--primary-color);
+    animation: pulse 1.5s infinite;
+}
+
+.forecast-temp {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-bg);
+    margin: 1rem 0;
+    position: relative;
+}
+
+.forecast-temp::after {
+    content: '°C';
     font-size: 1.2rem;
-    margin: 10px 0;
-    color: #333;
+    position: absolute;
+    margin-left: 0.3rem;
 }
 
+.forecast-condition {
+    color: #666;
+    font-size: 0.95rem;
+    min-height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ===== Updated Header/Navigation ===== */
+.header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 1rem 0;
+    position: relative;
+    z-index: 1000;
+}
+
+.nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+}
+
+.nav a {
+    color: var(--text-light);
+    padding: 0.75rem 1.25rem;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* ===== Enhanced Product Grid ===== */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem;
+}
+
+.product-card {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+}
+
+.product-card img {
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+/* ===== Modern Form Styles ===== */
+.new-product-form {
+    background: var(--text-light);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+}
+
+.new-product-form input,
+.new-product-form textarea {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #eee;
+    transition: border-color 0.3s ease;
+}
+
+.new-product-form input:focus,
+.new-product-form textarea:focus {
+    border-color: var(--primary-color);
+    background: var(--text-light);
+}
+
+/* ===== Footer Updates ===== */
+footer {
+    background: var(--dark-bg);
+    margin-top: 4rem;
+    padding: 3rem 0;
+    position: relative;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.counters p {
+    font-family: monospace;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1024px) {
+    .products {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .forecast-container {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
+
+    .nav ul {
+        gap: 1rem;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .new-product-form {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .forecast-day {
+        margin: 0 1rem;
+    }
+
+    .product-card img {
+        height: 200px;
+    }
+
+    .weather-icon {
+        font-size: 2.5rem;
+    }
+}
+
+/* ===== Utility Classes ===== */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent);
+    animation: loadingShimmer 1.5s infinite;
+}
+
+@keyframes loadingShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
 /* Add Product Section */
 .new-product-form {
     background-color: #fff;
