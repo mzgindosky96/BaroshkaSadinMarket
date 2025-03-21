@@ -12,28 +12,20 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <!-- Language Switcher -->
-        <div class="language-switcher">
-            <select id="language-select">
-                <option value="en">English</option>
-                <option value="ku">Kurdish</option>
-                <option value="ar">Arabic</option>
-            </select>
-        </div>
         <div class="container">
             <div class="brand">
-                <h1>Baroshka Sa'din Market</h1>
-                <p>Fresh Groceries & Daily Needs</p>
+                <h1 data-i18n="title">Baroshka Sa'din Market</h1>
+                <p data-i18n="tagline">Fresh Groceries & Daily Needs</p>
             </div>
             <!-- Navigation -->
             <nav class="nav">
                 <ul>
-                    <li><a href="#products">Products</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#weather">Weather</a></li>
-                    <li><a href="#new-product">Add Product</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#products" data-i18n="products">Products</a></li>
+                    <li><a href="#pricing" data-i18n="pricing">Pricing</a></li>
+                    <li><a href="#weather" data-i18n="weather">Weather</a></li>
+                    <li><a href="#new-product" data-i18n="addProduct">Add Product</a></li>
+                    <li><a href="#about" data-i18n="about">About</a></li>
+                    <li><a href="#contact" data-i18n="contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -42,45 +34,41 @@
     <!-- News Ticker Section -->
     <section id="news" class="news-ticker">
         <div class="ticker">
-            <p class="ticker-item">Seasonal discounts on fresh produce available now!</p>
-            <p class="ticker-item">Store Timings: Open daily from 9:00 AM to 10:00 PM.</p>
-            <p class="ticker-item">Special Offer: Free delivery for orders over $50!</p>
+            <!-- News items populated by JavaScript -->
         </div>
     </section>
-        <section id="new-product" class="section">
-    <h2>Add New Product</h2>
-    <form class="new-product-form" action="upload_product.php" method="POST" enctype="multipart/form-data">
-        <label for="product-name">Product Name:</label>
-        <input type="text" id="product-name" name="name" placeholder="Enter product name" required>
 
-        <label for="product-description">Description:</label>
-        <textarea id="product-description" name="description" rows="4" placeholder="Enter product description" required></textarea>
+    <!-- Add Product Section -->
+    <section id="new-product" class="section">
+        <h2 data-i18n="addProduct">Add New Product</h2>
+        <form class="new-product-form" action="upload_product.php" method="POST" enctype="multipart/form-data">
+            <label for="product-name" data-i18n="productName">Product Name:</label>
+            <input type="text" id="product-name" name="name" required>
 
-        <label for="product-price">Price:</label>
-        <input type="number" step="0.01" id="product-price" name="price" placeholder="Enter price" required>
+            <label for="product-description" data-i18n="description">Description:</label>
+            <textarea id="product-description" name="description" rows="4" required></textarea>
 
-        <label for="product-image">Upload Image:</label>
-        <input type="file" id="product-image" name="image" accept="image/*" required>
+            <label for="product-price" data-i18n="price">Price:</label>
+            <input type="number" step="0.01" id="product-price" name="price" required>
 
-        <button type="submit">Submit</button>
-    </form>
-</section>
+            <label for="product-image" data-i18n="uploadImage">Upload Image:</label>
+            <input type="file" id="product-image" name="image" accept="image/*" required>
+
+            <button type="submit" data-i18n="submit">Submit</button>
+        </form>
+    </section>
 
     <!-- Products Section -->
-  
     <section id="products" class="section">
-    <h2>Our Products</h2>
-    <div class="products">
-        <?php include 'fetch_products.php'; ?>
-    </div>
+        <h2 data-i18n="ourProducts">Our Products</h2>
+        <div class="products">
+            <?php include 'fetch_products.php'; ?>
+        </div>
+    </section>
 
-
-</section>
-
-
-    <!-- Google Sheet Embed Section -->
+    <!-- Pricing Section -->
     <section id="pricing" class="section">
-        <h2>Pricing Details</h2>
+        <h2 data-i18n="pricingDetails">Pricing Details</h2>
         <div class="embed-container">
             <iframe 
                 src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQumS0szmvzgaEp2Uinw_4oJ9GC9CGjSo170NToFOy1phmaCl4Zg668dDk8yAY385FV2yJ16OivWrmC/pubhtml?widget=true&amp;headers=false"
@@ -92,9 +80,8 @@
     </section>
 
     <!-- Weather Section -->
-    <!-- Weather Section -->
     <section id="weather" class="section">
-        <h2 data-i18n="weatherForecast">3-Day Weather Forecast</h2>
+        <h2 data-i18n="weatherForecast">Baroshke Weather (3)Day</h2>
         <div class="forecast-container">
             <div class="forecast-day">
                 <h3 class="forecast-date" id="day1-date"></h3>
@@ -123,90 +110,15 @@
         </div>
     </section>
 
-    <!-- Other Sections (unchanged) -->
-
-    <script>
-        // Weather Configuration
-        const WEATHER_CONFIG = {
-            API_KEY: '79de4918edc0fb684a957d2e926c4eaa',
-            CITY: 'Duhok',
-            COUNTRY: 'IQ',
-            FORECAST_DAYS: 3
-        };
-
-        // Weather Functions
-        async function fetchWeatherForecast() {
-            try {
-                const response = await fetch(
-                    `https://api.openweathermap.org/data/2.5/forecast?q=${WEATHER_CONFIG.CITY},${WEATHER_CONFIG.COUNTRY}&units=metric&appid=${WEATHER_CONFIG.API_KEY}`
-                );
-                
-                if (!response.ok) throw new Error('Weather service unavailable');
-                const data = await response.json();
-                
-                processForecastData(data.list);
-            } catch (error) {
-                console.error('Weather Error:', error);
-                showNotification('Failed to load weather forecast', 'error');
-            }
-        }
-
-        function processForecastData(forecastList) {
-            const dailyForecast = {};
-            
-            forecastList.forEach(item => {
-                const date = new Date(item.dt * 1000);
-                const dateString = date.toISOString().split('T')[0];
-                
-                if (!dailyForecast[dateString]) {
-                    dailyForecast[dateString] = {
-                        temps: [],
-                        conditions: [],
-                        icons: []
-                    };
-                }
-                
-                dailyForecast[dateString].temps.push(item.main.temp);
-                dailyForecast[dateString].conditions.push(item.weather[0].description);
-                dailyForecast[dateString].icons.push(item.weather[0].id);
-            });
-
-            const forecastDays = Object.keys(dailyForecast).slice(0, WEATHER_CONFIG.FORECAST_DAYS);
-            
-            forecastDays.forEach((date, index) => {
-                const dayData = dailyForecast[date];
-                const avgTemp = Math.round(dayData.temps.reduce((a, b) => a + b) / dayData.temps.length);
-                const mostCommonCondition = mode(dayData.conditions);
-                const mostCommonIcon = mode(dayData.icons);
-                
-                updateForecastDisplay(index + 1, date, avgTemp, mostCommonCondition, mostCommonIcon);
-            });
-        }
-
-        function updateForecastDisplay(dayNumber, dateString, temp, condition, iconId) {
-            const date = new Date(dateString);
-            const options = { weekday: 'long', month: 'short', day: 'numeric' };
-            
-            document.getElementById(`day${dayNumber}-date`).textContent = 
-                date.toLocaleDateString(undefined, options);
-            document.getElementById(`day${dayNumber}-temp`).textContent = 
-                `${temp}°C`;
-            document.getElementById(`day${dayNumber}-condition`).textContent = 
-                condition;
-            document.getElementById(`day${dayNumber}-icon`).className = 
-                `fas fa-${getWeatherIcon(iconId)}`;
-        }
-
-
     <!-- About Section -->
     <section id="about" class="section">
-        <h2>About Us</h2>
-        <p>We’ve been proudly serving the community with fresh, high-quality products for over two years. Visit us to experience friendly service and unbeatable value!</p>
+        <h2 data-i18n="aboutUs">About Us</h2>
+        <p data-i18n="aboutText">We've been proudly serving the community with fresh, high-quality products for over two years. Visit us to experience friendly service and unbeatable value!</p>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="section">
-        <h2>Contact Us</h2>
+        <h2 data-i18n="contactUs">Contact Us</h2>
         <div class="contact-info">
             <p><i class="fas fa-phone"></i> +964 751 886 5929</p>
             <p><i class="fas fa-envelope"></i> info@baroshkasaadin.com</p>
@@ -216,9 +128,32 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; <span id="footer-year">2025</span> Baroshka Sa'din Market. All rights reserved.</p>
+        <div class="footer-container">
+            <div class="footer-left">
+                <p>&copy; <span id="footer-year">2025</span> <span data-i18n="title">Baroshka Sa'din Market</span></p>
+            </div>
+            <div class="footer-center">
+                <div class="language-switcher">
+                    <select id="language-select">
+                        <option value="en">English</option>
+                        <option value="ku">Kurdish</option>
+                        <option value="ar">Arabic</option>
+                    </select>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div class="counters">
+                    <p><span class="counter-label" data-i18n="visitors">Visitors</span>: <?php include 'visitors.php'; ?></p>
+                    <p><span class="counter-label" data-i18n="online">Online</span>: <span id="online-counter">0</span></p>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <script src="Market.js"></script>
+    <script>
+        // Initialize footer year
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
