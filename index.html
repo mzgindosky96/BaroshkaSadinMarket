@@ -1,183 +1,119 @@
-// Weather Functions
-async function fetchWeather() {
-    const apiKey = '79de4918edc0fb684a957d2e926c4eaa';
-    const city = 'Duhok,IQ';
-    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baroshka Sa'din Market</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        data.list ? displayWeather(data) : showWeatherError();
-    } catch (error) {
-        console.error('Error fetching weather data:', error);
-        showWeatherError();
-    }
-}
+<header>
+    <h1>Baroshka Sa'din Market</h1>
+    <nav>
+        <a href="#prices">Prices</a>
+        <a href="#weather">Weather</a>
+        <a href="#upload-gallery">Gallery</a>
+        <a href="#map">Map</a>
+    </nav>
+</header>
 
-function displayWeather(data) {
-    const weatherContainer = document.querySelector('.weather-details');
-    weatherContainer.innerHTML = '';
-    
-    // Aggregate daily forecasts
-    const dailyForecasts = data.list.reduce((acc, forecast) => {
-        const date = new Date(forecast.dt * 1000).toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            month: 'short', 
-            day: 'numeric' 
-        });
-        if (!acc[date]) {
-            acc[date] = {
-                temp: Math.round(forecast.main.temp),
-                description: forecast.weather[0].main,
-                icon: getWeatherIcon(forecast.weather[0].id)
-            };
-        }
-        return acc;
-    }, {});
+<marquee behavior="scroll" direction="left">Itunes Card Google Play card Korek{5,000-1,000-3,000-10,000} Zain Asiacell Fastlink Availble Now in Market</marquee>
 
-    // Create weather cards
-    Object.entries(dailyForecasts).slice(0, 3).forEach(([day, forecast]) => {
-        const weatherCard = document.createElement('div');
-        weatherCard.className = 'weather-card';
-        weatherCard.innerHTML = `
-            <div class="floating-icon">
-                <i class="fas ${forecast.icon} weather-icon"></i>
-            </div>
-            <div class="temperature">${forecast.temp}°C</div>
-            <div class="weather-condition">${forecast.description}</div>
-            <p>${getWeatherMessage(forecast.description)}</p>
-        `;
-        weatherContainer.appendChild(weatherCard);
-    });
-}
+<section id="prices">
+    <h2>Today's Market Prices</h2>
+    <div class="price-table-container">
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+            </tr>
+            <tr>
+                <td>Apples (1 kg)</td>
+                <td>$3.00</td>
+            </tr>
+            <tr>
+                <td>Bananas (1 kg)</td>
+                <td>$2.50</td>
+            </tr>
+            <tr>
+                <td>Bread (1 loaf)</td>
+                <td>$1.50</td>
+            </tr>
+            <tr>
+                <td>Milk (1 liter)</td>
+                <td>$1.00</td>
+            </tr>
+            <tr>
+                <td>Eggs (dozen)</td>
+                <td>$2.00</td>
+            </tr>
+            <tr>
+                <td>Organic Avocados (each)</td>
+                <td>$1.50</td>
+            </tr>
+            <tr>
+                <td>Fresh Berries (250g)</td>
+                <td>$4.00</td>
+            </tr>
+            <tr>
+                <td>Whole Grain Bread (1 loaf)</td>
+                <td>$2.00</td>
+            </tr>
+        </table>
+    </div>
+</section>
 
-function getWeatherIcon(weatherId) {
-    if (weatherId >= 200 && weatherId < 300) return 'fa-bolt';
-    if (weatherId >= 300 && weatherId < 600) return 'fa-cloud-rain';
-    if (weatherId >= 600 && weatherId < 700) return 'fa-snowflake';
-    if (weatherId === 800) return 'fa-sun';
-    if (weatherId > 800) return 'fa-cloud';
-    return 'fa-cloud-sun';
-}
-
-function getWeatherMessage(condition) {
-    const messages = {
-        'Clear': 'Perfect day for outdoor shopping!',
-        'Clouds': 'Light cloud cover expected',
-        'Rain': 'Don\'t forget your umbrella!',
-        'Thunderstorm': 'Seek indoor shelter if storm occurs',
-        'Snow': 'Watch for slippery surfaces'
-    };
-    return messages[condition] || 'Check back for updates!';
-}
-
-function showWeatherError() {
-    document.querySelector('.weather-details').innerHTML = `
-        <div class="weather-card error">
-            <i class="fas fa-exclamation-triangle weather-icon"></i>
-            <p>Unable to load weather data. Please try again later.</p>
+<section id="weather">
+    <div class="weather-container">
+        <h2>Market Weather</h2>
+        <div class="weather-details">
+            <!-- Weather cards will be dynamically inserted here -->
         </div>
-    `;
-}
+    </div>
+</section>
 
-// Visitor Counter
-let totalVisitors = localStorage.getItem('totalVisitors') || 0;
-let onlineUsers = new Set();
+<section id="upload-gallery">
+    <h2>Upload Photos or Videos</h2>
+    <form id="upload-form">
+        <input type="file" id="file-input" accept="image/*,video/*" multiple>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="upload-status"></div>
+    <h3>Media Gallery</h3>
+    <div id="media-gallery" class="media-gallery"></div>
+</section>
 
-function updateVisitorCount() {
-    // Generate unique session ID
-    const sessionId = sessionStorage.getItem('sessionId') || Date.now().toString();
-    
-    if (!sessionStorage.getItem('sessionId')) {
-        totalVisitors++;
-        localStorage.setItem('totalVisitors', totalVisitors);
-        sessionStorage.setItem('sessionId', sessionId);
-    }
+<section id="map">
+    <h2>Map & Navigation</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d676.2694218434772!2d43.07738791773344!3d37.06669808670068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4008c30061a3ec1f%3A0x76d2ec4e6d152d4f!2z2KjblSDYsdmI2LTaqdin2LPYudiv24zZhiDZhdin2LHZg9uO2Ko!5e0!3m2!1sar!2siq!4v1742573259399!5m2!1sar!2siq" 
+            width="100%" 
+            height="500" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</section>
 
-    onlineUsers.add(sessionId);
-    localStorage.setItem('onlineUsers', JSON.stringify([...onlineUsers]));
-    
-    document.getElementById('total-visitors').textContent = totalVisitors;
-    document.getElementById('online-count').textContent = onlineUsers.size;
-}
+<section id="visitor-counter">
+    <h2>Visitor Counter</h2>
+    <p>Total Visitors: <span id="total-visitors">0</span></p>
+    <p>Online Now: <span id="online-count">0</span></p>
+</section>
 
-// File Upload Handler
-document.getElementById('upload-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const files = document.getElementById('file-input').files;
-    const gallery = document.getElementById('media-gallery');
-    
-    Array.from(files).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const mediaItem = document.createElement('div');
-            mediaItem.className = 'media-item';
-            mediaItem.innerHTML = file.type.startsWith('image/') ?
-                `<img src="${reader.result}" alt="${file.name}">` :
-                `<video controls><source src="${reader.result}" type="${file.type}"></video>`;
-            
-            gallery.appendChild(mediaItem);
-            animateMediaItem(mediaItem);
-        };
-        reader.readAsDataURL(file);
-    });
-    
-    document.getElementById('upload-status').textContent = 
-        `Successfully uploaded ${files.length} file(s)`;
-});
+<footer>
+    <div class="footer-content">
+        <h2>About Us & Location</h2>
+        <p>Welcome to Baroshka Sa'din Market! We offer a wide variety of fresh produce, groceries, and household items at competitive prices. Our mission is to provide quality products and excellent customer service to our community.</p>
+        <p>We are located at Baste Road, Duhok, Iraq. Come visit us for all your shopping needs!</p>
+        <p>Email: <a href="mailto:baroshkasaadinmarket@gmail.com">baroshkasaadinmarket@gmail.com</a></p>
+        <p>Phone: <a href="tel:+9647518865929">+9647518865929</a></p>
+    </div>
+    <p>&copy; 2025 Baroshka Sa'din Market. All rights reserved.</p>
+</footer>
 
-function animateMediaItem(element) {
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(20px)';
-    requestAnimationFrame(() => {
-        element.style.transition = 'all 0.3s ease';
-        element.style.opacity = '1';
-        element.style.transform = 'translateY(0)';
-    });
-}
-
-// Price Table Editor
-document.querySelectorAll('#prices tr').forEach(row => {
-    row.addEventListener('dblclick', () => {
-        const itemName = row.cells[0].textContent;
-        const currentPrice = row.cells[1].textContent;
-        const newPrice = prompt(`Edit price for ${itemName}:`, currentPrice);
-        
-        if (newPrice && newPrice !== currentPrice) {
-            row.cells[1].textContent = newPrice;
-            row.style.animation = 'highlightUpdate 1s';
-            row.addEventListener('animationend', () => row.style.animation = '');
-        }
-    });
-});
-
-// Map Interaction
-document.querySelector('#map iframe').addEventListener('click', () => {
-    window.open(document.querySelector('#map iframe').src.replace('/embed', '/map'), '_blank');
-});
-
-// Initialize Page
-window.addEventListener('load', () => {
-    fetchWeather();
-    updateVisitorCount();
-    
-    // Load existing online users
-    const storedUsers = localStorage.getItem('onlineUsers');
-    onlineUsers = new Set(storedUsers ? JSON.parse(storedUsers) : []);
-    
-    // Cleanup expired sessions
-    window.addEventListener('beforeunload', () => {
-        onlineUsers.delete(sessionStorage.getItem('sessionId'));
-        localStorage.setItem('onlineUsers', JSON.stringify([...onlineUsers]));
-    });
-});
-
-// Animation Keyframes
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes highlightUpdate {
-        0% { background-color: #ffd70050; }
-        100% { background-color: transparent; }
-    }
-`;
-document.head.appendChild(style);
+<script src="script.js"></script>
+</body>
+</html>
