@@ -1,106 +1,183 @@
-// Function to fetch and display the 3-day weather forecast for Dahuk
+// Weather Functions
 async function fetchWeather() {
-    const apiKey = '79de4918edc0fb684a957d2e926c4eaa'; // Your OpenWeatherMap API key
+    const apiKey = '79de4918edc0fb684a957d2e926c4eaa';
     const city = 'Duhok,IQ';
     const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
-
-        if (data.cod === "200") {
-            displayWeather(data);
-        } else {
-            document.getElementById('weather-forecast').innerHTML = `<p>Error fetching weather data: ${data.message}</p>`;
-        }
+        data.list ? displayWeather(data) : showWeatherError();
     } catch (error) {
         console.error('Error fetching weather data:', error);
-        document.getElementById('weather-forecast').innerHTML = `<p>Error fetching weather data. Please try again later.</p>`;
+        showWeatherError();
     }
 }
 
-// Function to display the weather data
 function displayWeather(data) {
-    const weatherForecast = document.getElementById('weather-forecast');
-    weatherForecast.innerHTML = '';
-
-    // Filter the data to get only the next 3 days
-    const uniqueDates = new Set();
-    let count = 0;
-
-    data.list.forEach((forecast) => {
-        const date = new Date(forecast.dt * 1000).toLocaleDateString();
-        if (!uniqueDates.has(date) && count < 3) {
-            uniqueDates.add(date);
-            const temp = forecast.main.temp;
-            const weatherDescription = forecast.weather[0].description;
-            const icon = forecast.weather[0].icon;
-
-            weatherForecast.innerHTML += `
-                <div class="weather-day">
-                    <h3>${date}</h3>
-                    <img src="https://openweathermap.org/img/wn/${icon}.png" alt="${weatherDescription}">
-                    <p>Temperature: ${temp}°C</p>
-                    <p>Condition: ${weatherDescription}</p>
-                </div>
-            `;
-            count++;
+    const weatherContainer = document.querySelector('.weather-details');
+    weatherContainer.innerHTML = '';
+    
+    // Aggregate daily forecasts
+    const dailyForecasts = data.list.reduce((acc, forecast) => {
+        const date = new Date(forecast.dt * 1000).toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            month: 'short', 
+            day: 'numeric' 
+        });
+        if (!acc[date]) {
+            acc[date] = {
+                temp: Math.round(forecast.main.temp),
+                description: forecast.weather[0].main,
+                icon: getWeatherIcon(forecast.weather[0].id)
+            };
         }
+        return acc;
+    }, {});
+
+    // Create weather cards
+    Object.entries(dailyForecasts).slice(0, 3).forEach(([day, forecast]) => {
+        const weatherCard = document.createElement('div');
+        weatherCard.className = 'weather-card';
+        weatherCard.innerHTML = `
+            <div class="floating-icon">
+                <i class="fas ${forecast.icon} weather-icon"></i>
+            </div>
+            <div class="temperature">${forecast.temp}°C</div>
+            <div class="weather-condition">${forecast.description}</div>
+            <p>${getWeatherMessage(forecast.description)}</p>
+        `;
+        weatherContainer.appendChild(weatherCard);
     });
 }
 
-// Visitor and online counter
-let totalVisitors = localStorage.getItem('totalVisitors') ? parseInt(localStorage.getItem('totalVisitors')) : 0;
-let onlineCount = 0; // This will be a simple counter for the current session
-
-function updateVisitorCount() {
-    totalVisitors++;
-    localStorage.setItem('totalVisitors', totalVisitors);
-    document.getElementById('total-visitors').textContent = totalVisitors;
-    onlineCount++;
-    document.getElementById('online-count').textContent = onlineCount;
+function getWeatherIcon(weatherId) {
+    if (weatherId >= 200 && weatherId < 300) return 'fa-bolt';
+    if (weatherId >= 300 && weatherId < 600) return 'fa-cloud-rain';
+    if (weatherId >= 600 && weatherId < 700) return 'fa-snowflake';
+    if (weatherId === 800) return 'fa-sun';
+    if (weatherId > 800) return 'fa-cloud';
+    return 'fa-cloud-sun';
 }
 
-// Function to handle file uploads
-document.getElementById('upload-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+function getWeatherMessage(condition) {
+    const messages = {
+        'Clear': 'Perfect day for outdoor shopping!',
+        'Clouds': 'Light cloud cover expected',
+        'Rain': 'Don\'t forget your umbrella!',
+        'Thunderstorm': 'Seek indoor shelter if storm occurs',
+        'Snow': 'Watch for slippery surfaces'
+    };
+    return messages[condition] || 'Check back for updates!';
+}
 
-    const fileInput = document.getElementById('file-input');
-    const files = fileInput.files;
-    const uploadStatus = document.getElementById('upload-status');
-    const mediaGallery = document.getElementById('media-gallery');
+function showWeatherError() {
+    document.querySelector('.weather-details').innerHTML = `
+        <div class="weather-card error">
+            <i class="fas fa-exclamation-triangle weather-icon"></i>
+            <p>Unable to load weather data. Please try again later.</p>
+        </div>
+    `;
+}
 
-    if (files.length === 0) {
-        uploadStatus.textContent = 'Please select a file to upload.';
-        return;
+// Visitor Counter
+let totalVisitors = localStorage.getItem('totalVisitors') || 0;
+let onlineUsers = new Set();
+
+function updateVisitorCount() {
+    // Generate unique session ID
+    const sessionId = sessionStorage.getItem('sessionId') || Date.now().toString();
+    
+    if (!sessionStorage.getItem('sessionId')) {
+        totalVisitors++;
+        localStorage.setItem('totalVisitors', totalVisitors);
+        sessionStorage.setItem('sessionId', sessionId);
     }
 
-    // Clear previous status message
-    uploadStatus.textContent = '';
+    onlineUsers.add(sessionId);
+    localStorage.setItem('onlineUsers', JSON.stringify([...onlineUsers]));
+    
+    document.getElementById('total-visitors').textContent = totalVisitors;
+    document.getElementById('online-count').textContent = onlineUsers.size;
+}
 
-    // Display the uploaded files in the gallery
+// File Upload Handler
+document.getElementById('upload-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const files = document.getElementById('file-input').files;
+    const gallery = document.getElementById('media-gallery');
+    
     Array.from(files).forEach(file => {
-        const mediaItem = document.createElement('div');
-        mediaItem.classList.add('media-item');
-
         const reader = new FileReader();
-        reader.onload = function(e) {
-            if (file.type.startsWith('image/')) {
-                mediaItem.innerHTML = `<img src="${e.target.result}" alt="${file.name}">`;
-            } else if (file.type.startsWith('video/')) {
-                mediaItem.innerHTML = `<video controls><source src="${e.target.result}" type="${file.type}">Your browser does not support the video tag.</video>`;
-            }
-            mediaGallery.appendChild(mediaItem);
+        reader.onload = () => {
+            const mediaItem = document.createElement('div');
+            mediaItem.className = 'media-item';
+            mediaItem.innerHTML = file.type.startsWith('image/') ?
+                `<img src="${reader.result}" alt="${file.name}">` :
+                `<video controls><source src="${reader.result}" type="${file.type}"></video>`;
+            
+            gallery.appendChild(mediaItem);
+            animateMediaItem(mediaItem);
         };
         reader.readAsDataURL(file);
     });
-
-    // Show upload success message
-    uploadStatus.textContent = `Uploaded: ${files.length} file(s)`;
+    
+    document.getElementById('upload-status').textContent = 
+        `Successfully uploaded ${files.length} file(s)`;
 });
 
-// Call the fetchWeather function when the page loads
-window.onload = function() {
+function animateMediaItem(element) {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px)';
+    requestAnimationFrame(() => {
+        element.style.transition = 'all 0.3s ease';
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+    });
+}
+
+// Price Table Editor
+document.querySelectorAll('#prices tr').forEach(row => {
+    row.addEventListener('dblclick', () => {
+        const itemName = row.cells[0].textContent;
+        const currentPrice = row.cells[1].textContent;
+        const newPrice = prompt(`Edit price for ${itemName}:`, currentPrice);
+        
+        if (newPrice && newPrice !== currentPrice) {
+            row.cells[1].textContent = newPrice;
+            row.style.animation = 'highlightUpdate 1s';
+            row.addEventListener('animationend', () => row.style.animation = '');
+        }
+    });
+});
+
+// Map Interaction
+document.querySelector('#map iframe').addEventListener('click', () => {
+    window.open(document.querySelector('#map iframe').src.replace('/embed', '/map'), '_blank');
+});
+
+// Initialize Page
+window.addEventListener('load', () => {
     fetchWeather();
     updateVisitorCount();
-};
+    
+    // Load existing online users
+    const storedUsers = localStorage.getItem('onlineUsers');
+    onlineUsers = new Set(storedUsers ? JSON.parse(storedUsers) : []);
+    
+    // Cleanup expired sessions
+    window.addEventListener('beforeunload', () => {
+        onlineUsers.delete(sessionStorage.getItem('sessionId'));
+        localStorage.setItem('onlineUsers', JSON.stringify([...onlineUsers]));
+    });
+});
+
+// Animation Keyframes
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes highlightUpdate {
+        0% { background-color: #ffd70050; }
+        100% { background-color: transparent; }
+    }
+`;
+document.head.appendChild(style);
