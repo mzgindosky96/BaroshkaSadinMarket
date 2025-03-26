@@ -78,17 +78,51 @@
     </div>
 </section>
 
-<section id="upload-gallery">
-    <h2>Upload Photos or Videos</h2>
-    <form id="upload-form">
-        <input type="file" id="file-input" accept="image/*,video/*" multiple>
-        <button type="submit">Upload</button>
-    </form>
-    <div id="upload-status"></div>
-    <h3>Media Gallery</h3>
-    <div id="media-gallery" class="media-gallery"></div>
-</section>
+ <section id="upload-gallery" class="upload-section">
+    <div class="section-header">
+        <h2><i class="fas fa-cloud-upload-alt"></i> Share Your Market Moments</h2>
+        <p>Authorized users can upload photos/videos using secure key</p>
+    </div>
 
+    <div class="upload-card">
+        <form id="upload-form" class="styled-form">
+            <div class="form-group">
+                <label for="secret-key">
+                    <i class="fas fa-key"></i> Secret Key
+                </label>
+                <input type="password" id="secret-key" 
+                       placeholder="Enter your access key" 
+                       class="modern-input">
+            </div>
+
+            <div class="form-group">
+                <div class="drag-drop-area" id="drop-zone">
+                    <i class="fas fa-images"></i>
+                    <p>Drag & drop files here or click to browse</p>
+                    <input type="file" id="file-input" 
+                           accept="image/*,video/*" 
+                           multiple 
+                           hidden>
+                </div>
+                <div id="file-list" class="file-list"></div>
+            </div>
+
+            <button type="submit" class="upload-button">
+                <i class="fas fa-upload"></i> Upload Media
+            </button>
+        </form>
+
+        <div id="upload-status" class="status-message"></div>
+        <div id="key-error" class="error-message">
+            <i class="fas fa-exclamation-triangle"></i> Invalid access key!
+        </div>
+    </div>
+
+    <div class="gallery-container">
+        <h3><i class="fas fa-photo-video"></i> Community Gallery</h3>
+        <div id="media-gallery" class="media-grid"></div>
+    </div>
+</section>
 
 
 <section id="map">
