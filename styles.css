@@ -317,10 +317,9 @@ footer a {
         padding: 0.5rem;
     }
 
-    marquee {
-        font-size: 1rem;
-    }
-
+   marquee {
+  scroll-speed: 3; /* Adjust this value for speed control */
+}
     #map iframe {
         height: 300px;
     }
