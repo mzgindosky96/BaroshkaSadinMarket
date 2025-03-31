@@ -23,7 +23,132 @@
     </nav>
 </header>
 
-<marquee behavior="scroll" direction="left" scrollamount="3">Itunes Card Google Play card Korek{5,000-1,000-3,000-10,000} Zain Asiacell Fastlink Available Now in Market</marquee>
+<marquee behavior="scroll" direction="left">Itunes Card Google Play card Korek{5,000-1,000-3,000-10,000} Zain Asiacell Fastlink Availble Now in Market</marquee>
+
+
+<!-- Add this after the marquee -->
+<section id="post-items">
+    <h2>Post New Market Items</h2>
+    <form id="item-form">
+        <input type="text" id="item-name" placeholder="Item Name" required>
+        <textarea id="item-description" placeholder="Item Description" required></textarea>
+        <input type="number" id="item-price" placeholder="Price in IQD" required>
+        <input type="file" id="item-image" accept="image/*" required>
+        <button type="submit">Post Item</button>
+    </form>
+    
+    <h3>Latest Market Items</h3>
+    <div id="items-list" class="items-grid"></div>
+</section>
+
+<!-- Add this CSS to your styles.css -->
+<style>
+    #post-items {
+        padding: 2rem;
+        background-color: #f9f9f9;
+    }
+
+    #item-form {
+        display: grid;
+        gap: 1rem;
+        max-width: 500px;
+        margin: 0 auto 2rem;
+    }
+
+    #item-form input, 
+    #item-form textarea {
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .items-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 1rem;
+    }
+
+    .item-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .item-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .item-info {
+        padding: 1rem;
+    }
+
+    .item-price {
+        color: #2ecc71;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+</style>
+
+<!-- Add this JavaScript to your script.js -->
+<script>
+
+
+    // Item posting functionality
+    document.getElementById('item-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const reader = new FileReader();
+        const imageFile = document.getElementById('item-image').files[0];
+        
+        reader.onload = function(e) {
+            const newItem = {
+                name: document.getElementById('item-name').value,
+                description: document.getElementById('item-description').value,
+                price: document.getElementById('item-price').value,
+                image: e.target.result,
+                date: new Date().toLocaleDateString()
+            };
+
+            let items = JSON.parse(localStorage.getItem('marketItems') || '[]');
+            items.unshift(newItem);
+            localStorage.setItem('marketItems', JSON.stringify(items));
+            
+            displayItems();
+            this.reset();
+        }.bind(this);
+
+        reader.readAsDataURL(imageFile);
+    });
+
+    // Display items
+    function displayItems() {
+        const items = JSON.parse(localStorage.getItem('marketItems') || '[]');
+        const container = document.getElementById('items-list');
+        container.innerHTML = '';
+
+        items.forEach(item => {
+            const itemCard = document.createElement('div');
+            itemCard.className = 'item-card';
+            itemCard.innerHTML = `
+                <img src="${item.image}" class="item-image" alt="${item.name}">
+                <div class="item-info">
+                    <h4>${item.name}</h4>
+                    <p>${item.description}</p>
+                    <div class="item-price">${Number(item.price).toLocaleString()} IQD</div>
+                    <small>Posted: ${item.date}</small>
+                </div>
+            `;
+            container.appendChild(itemCard);
+        });
+    }
+
+    // Initial display
+    displayItems();
+</script>
 
 <section id="prices">
     <h2>Today's Market Prices</h2>
@@ -78,52 +203,9 @@
     </div>
 </section>
 
- <section id="upload-gallery" class="upload-section">
-    <div class="section-header">
-        <h2><i class="fas fa-cloud-upload-alt"></i> Share Your Market Moments</h2>
-        <p>Authorized users can upload photos/videos using secure key</p>
-    </div>
-
-    <div class="upload-card">
-        <form id="upload-form" class="styled-form">
-            <div class="form-group">
-                <label for="secret-key">
-                    <i class="fas fa-key"></i> Secret Key
-                </label>
-                <input type="password" id="secret-key" 
-                       placeholder="Enter your access key" 
-                       class="modern-input">
-            </div>
-
-            <div class="form-group">
-                <div class="drag-drop-area" id="drop-zone">
-                    <i class="fas fa-images"></i>
-                    <p>Drag & drop files here or click to browse</p>
-                    <input type="file" id="file-input" 
-                           accept="image/*,video/*" 
-                           multiple 
-                           hidden>
-                </div>
-                <div id="file-list" class="file-list"></div>
-            </div>
-
-            <button type="submit" class="upload-button">
-                <i class="fas fa-upload"></i> Upload Media
-            </button>
-        </form>
-
-        <div id="upload-status" class="status-message"></div>
-        <div id="key-error" class="error-message">
-            <i class="fas fa-exclamation-triangle"></i> Invalid access key!
-        </div>
-    </div>
-
-    <div class="gallery-container">
-        <h3><i class="fas fa-photo-video"></i> Community Gallery</h3>
-        <div id="media-gallery" class="media-grid"></div>
-    </div>
+<section id="upload-gallery">
+   
 </section>
-
 
 <section id="map">
     <h2>Nav U Nishan</h2>
