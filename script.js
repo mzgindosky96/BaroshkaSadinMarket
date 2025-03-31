@@ -194,6 +194,37 @@ async function displayItems() {
 // Initial display
 displayItems();
 
+document.getElementById('item-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('name', document.getElementById('item-name').value);
+    formData.append('description', document.getElementById('item-description').value);
+    formData.append('price', document.getElementById('item-price').value);
+    formData.append('image', document.getElementById('item-image').files[0]);
+    formData.append('secret_code', document.getElementById('secret-code').value);
+
+    try {
+        const response = await fetch('post_item.php', {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            displayItems();
+            this.reset();
+            alert('Item posted successfully!');
+        } else {
+            alert('Error: ' + (result.message || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Network error - please try again');
+    }
+});
+
+// Keep displayItems() function the same as before
 
 // Animation Keyframes
 const style = document.createElement('style');
