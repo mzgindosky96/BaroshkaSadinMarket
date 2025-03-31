@@ -138,6 +138,63 @@ window.addEventListener('load', () => {
     });
 });
 
+// Post item
+document.getElementById('item-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('name', document.getElementById('item-name').value);
+    formData.append('description', document.getElementById('item-description').value);
+    formData.append('price', document.getElementById('item-price').value);
+    formData.append('image', document.getElementById('item-image').files[0]);
+
+    try {
+        const response = await fetch('post_item.php', {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            displayItems();
+            this.reset();
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
+// Display items
+async function displayItems() {
+    try {
+        const response = await fetch('get_items.php');
+        const items = await response.json();
+        const container = document.getElementById('items-list');
+        container.innerHTML = '';
+
+        items.forEach(item => {
+            const itemCard = document.createElement('div');
+            itemCard.className = 'item-card';
+            itemCard.innerHTML = `
+                <img src="${item.image}" class="item-image" alt="${item.name}">
+                <div class="item-info">
+                    <h4>${item.name}</h4>
+                    <p>${item.description}</p>
+                    <div class="item-price">${Number(item.price).toLocaleString()} IQD</div>
+                    <small>Posted: ${new Date(item.created_at).toLocaleDateString()}</small>
+                </div>
+            `;
+            container.appendChild(itemCard);
+        });
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Initial display
+displayItems();
+
+
 // Animation Keyframes
 const style = document.createElement('style');
 style.textContent = `
