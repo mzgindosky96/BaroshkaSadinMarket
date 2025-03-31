@@ -29,7 +29,7 @@
 <!-- Add this after the marquee -->
 <section id="post-items">
     <h2>Post New Market Items</h2>
-    <form id="item-form">
+    <form id="item-form" enctype="multipart/form-data">
         <input type="text" id="item-name" placeholder="Item Name" required>
         <textarea id="item-description" placeholder="Item Description" required></textarea>
         <input type="number" id="item-price" placeholder="Price in IQD" required>
@@ -98,56 +98,54 @@
 
 
     // Item posting functionality
-    document.getElementById('item-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const reader = new FileReader();
-        const imageFile = document.getElementById('item-image').files[0];
-        
-        reader.onload = function(e) {
-            const newItem = {
-                name: document.getElementById('item-name').value,
-                description: document.getElementById('item-description').value,
-                price: document.getElementById('item-price').value,
-                image: e.target.result,
-                date: new Date().toLocaleDateString()
-            };
+   document.getElementById('item-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('name', document.getElementById('item-name').value);
+    formData.append('description', document.getElementById('item-description').value);
+    formData.append('price', document.getElementById('item-price').value);
+    formData.append('image', document.getElementById('item-image').files[0]);
 
-            let items = JSON.parse(localStorage.getItem('marketItems') || '[]');
-            items.unshift(newItem);
-            localStorage.setItem('marketItems', JSON.stringify(items));
-            
+    fetch('post_item.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === 'success') {
             displayItems();
             this.reset();
-        }.bind(this);
-
-        reader.readAsDataURL(imageFile);
+        } else {
+            alert('Error: ' + (data.message || 'Could not post item'));
+        }
     });
+});
 
-    // Display items
-    function displayItems() {
-        const items = JSON.parse(localStorage.getItem('marketItems') || '[]');
-        const container = document.getElementById('items-list');
-        container.innerHTML = '';
+async function displayItems() {
+    const response = await fetch('get_items.php');
+    const items = await response.json();
+    const container = document.getElementById('items-list');
+    container.innerHTML = '';
 
-        items.forEach(item => {
-            const itemCard = document.createElement('div');
-            itemCard.className = 'item-card';
-            itemCard.innerHTML = `
-                <img src="${item.image}" class="item-image" alt="${item.name}">
-                <div class="item-info">
-                    <h4>${item.name}</h4>
-                    <p>${item.description}</p>
-                    <div class="item-price">${Number(item.price).toLocaleString()} IQD</div>
-                    <small>Posted: ${item.date}</small>
-                </div>
-            `;
-            container.appendChild(itemCard);
-        });
-    }
+    items.forEach(item => {
+        const itemCard = document.createElement('div');
+        itemCard.className = 'item-card';
+        itemCard.innerHTML = `
+            <img src="${item.image_path}" class="item-image" alt="${item.name}">
+            <div class="item-info">
+                <h4>${item.name}</h4>
+                <p>${item.description}</p>
+                <div class="item-price">${Number(item.price).toLocaleString()} IQD</div>
+                <small>Posted: ${new Date(item.created_at).toLocaleDateString()}</small>
+            </div>
+        `;
+        container.appendChild(itemCard);
+    });
+}
 
-    // Initial display
-    displayItems();
+displayItems();
+
 </script>
 
 <section id="prices">
