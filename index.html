@@ -125,9 +125,34 @@
         reader.readAsDataURL(imageFile);
     });
 
-    // Display items
-    function displayItems() {
-        const items = JSON.parse(localStorage.getItem('marketItems') || '[]');
+  document.getElementById('item-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('item-name', document.getElementById('item-name').value);
+    formData.append('item-description', document.getElementById('item-description').value);
+    formData.append('item-price', document.getElementById('item-price').value);
+    formData.append('secret-code', document.getElementById('secret-code').value);
+    formData.append('item-image', document.getElementById('item-image').files[0]);
+
+    fetch('save_item.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data);
+        displayItems();
+        this.reset();
+    })
+    .catch(error => console.error(error));
+});
+
+async function displayItems() {
+    try {
+        const response = await fetch('get_items.php');
+        const items = await response.json();
+        
         const container = document.getElementById('items-list');
         container.innerHTML = '';
 
@@ -145,10 +170,13 @@
             `;
             container.appendChild(itemCard);
         });
+    } catch (error) {
+        console.error('Error fetching items:', error);
     }
+}
 
-    // Initial display
-    displayItems();
+// Initial display
+displayItems();
 </script>
 
 <section id="prices">
