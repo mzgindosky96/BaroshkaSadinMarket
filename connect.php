@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$db   = 'marketplace';
+$db   = 'market_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
