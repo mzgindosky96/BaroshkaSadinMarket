@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,159 +26,18 @@
 
 
 <!-- Add this after the marquee -->
-<section id="post-items">
-    <h2>Post New Market Items</h2>
-    <form id="item-form">
-        <input type="text" id="item-name" placeholder="Item Name" required>
-        <textarea id="item-description" placeholder="Item Description" required></textarea>
-        <input type="number" id="item-price" placeholder="Price in IQD" required>
-          <input type="password" id="secret-code" placeholder="Secret Posting Code" required>
-        <input type="file" id="item-image" accept="image/*" required>
-        <button type="submit">Post Item</button>
-    </form>
-    
-    <h3>Latest Market Items</h3>
-    <div id="items-list" class="items-grid"></div>
-</section>
-
-<!-- Add this CSS to your styles.css -->
-<style>
-    #post-items {
-        padding: 2rem;
-        background-color: #f9f9f9;
-    }
-
-    #item-form {
-        display: grid;
-        gap: 1rem;
-        max-width: 500px;
-        margin: 0 auto 2rem;
-    }
-
-    #item-form input, 
-    #item-form textarea {
-        padding: 0.8rem;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-
-    .items-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 2rem;
-        padding: 1rem;
-    }
-
-    .item-card {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        overflow: hidden;
-    }
-
-    .item-image {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .item-info {
-        padding: 1rem;
-    }
-
-    .item-price {
-        color: #2ecc71;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-</style>
-
-<!-- Add this JavaScript to your script.js -->
-<script>
-
-
-    // Item posting functionality
-    document.getElementById('item-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const reader = new FileReader();
-        const imageFile = document.getElementById('item-image').files[0];
-        
-        reader.onload = function(e) {
-            const newItem = {
-                name: document.getElementById('item-name').value,
-                description: document.getElementById('item-description').value,
-                price: document.getElementById('item-price').value,
-                image: e.target.result,
-                date: new Date().toLocaleDateString()
-            };
-
-            let items = JSON.parse(localStorage.getItem('marketItems') || '[]');
-            items.unshift(newItem);
-            localStorage.setItem('marketItems', JSON.stringify(items));
-            
-            displayItems();
-            this.reset();
-        }.bind(this);
-
-        reader.readAsDataURL(imageFile);
-    });
-
-  document.getElementById('item-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData();
-    formData.append('item-name', document.getElementById('item-name').value);
-    formData.append('item-description', document.getElementById('item-description').value);
-    formData.append('item-price', document.getElementById('item-price').value);
-    formData.append('secret-code', document.getElementById('secret-code').value);
-    formData.append('item-image', document.getElementById('item-image').files[0]);
-
-    fetch('save_item.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log(data);
-        displayItems();
-        this.reset();
-    })
-    .catch(error => console.error(error));
-});
-
-async function displayItems() {
-    try {
-        const response = await fetch('get_items.php');
-        const items = await response.json();
-        
-        const container = document.getElementById('items-list');
-        container.innerHTML = '';
-
-        items.forEach(item => {
-            const itemCard = document.createElement('div');
-            itemCard.className = 'item-card';
-            itemCard.innerHTML = `
-                <img src="${item.image}" class="item-image" alt="${item.name}">
-                <div class="item-info">
-                    <h4>${item.name}</h4>
-                    <p>${item.description}</p>
-                    <div class="item-price">${Number(item.price).toLocaleString()} IQD</div>
-                    <small>Posted: ${item.date}</small>
-                </div>
-            `;
-            container.appendChild(itemCard);
-        });
-    } catch (error) {
-        console.error('Error fetching items:', error);
-    }
-}
-
-// Initial display
-displayItems();
-</script>
+<section>
+ <?php include "form.php"?>
+    </section>
 
 <section id="prices">
+<style>
+  .center-text {
+    text-align: center;
+  }
+</style>
+
+<div class="center-text">
     <h2>Today's Market Prices</h2>
     <div class="price-table-container">
         <table>
@@ -225,6 +83,13 @@ displayItems();
 
 <section id="weather">
     <div class="weather-container">
+<style>
+  .center-text {
+    text-align: center;
+  }
+</style>
+
+<div class="center-text">
         <h2>Baroshke Weather</h2>
         <div class="weather-details">
             <!-- Weather cards will be dynamically inserted here -->
@@ -237,6 +102,14 @@ displayItems();
 </section>
 
 <section id="map">
+    
+<style>
+  .center-text {
+    text-align: center;
+  }
+</style>
+
+<div class="center-text">
     <h2>Nav U Nishan</h2>
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d676.2694218434772!2d43.07738791773344!3d37.06669808670068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4008c30061a3ec1f%3A0x76d2ec4e6d152d4f!2z2KjblSDYsdmI2LTaqdin2LPYudiv24zZhiDZhdin2LHZg9uO2Ko!5e0!3m2!1sar!2siq!4v1742573259399!5m2!1sar!2siq" 
             width="100%" 
