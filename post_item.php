@@ -1,23 +1,18 @@
 <?php
-require 'connect.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $uploadDir = 'uploads/';
-    $imagePath = $uploadDir . basename($_FILES['image']['name']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $conn = new mysqli("localhost", "root", "", "market_db");
     
-    // Move uploaded file
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
-        $stmt = $pdo->prepare("INSERT INTO items (name, description, price, image) VALUES (?, ?, ?, ?)");
-        $stmt->execute([
-            $_POST['name'],
-            $_POST['description'],
-            $_POST['price'],
-            $imagePath
-        ]);
-        
-        echo json_encode(['status' => 'success']);
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'File upload failed']);
-    }
+    // File upload handling
+    $target_dir = "uploads/";
+    $target_file = $target_dir . uniqid() . basename($_FILES["item_image"]["name"]);
+    move_uploaded_file($_FILES["item_image"]["tmp_name"], $target_file);
+
+    // Insert into database
+    $stmt = $conn->prepare("INSERT INTO items (name, description, price, secret_code, image_path) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssiss", $_POST["item_name"], $_POST["item_description"], $_POST["item_price"], $_POST["secret_code"], $target_file);
+    $stmt->execute();
+    
+    header("Location: index.php");
+    exit();
 }
 ?>
