@@ -59,6 +59,14 @@ marquee {
     font-weight: 600;
 }
 
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('fonts/rudawbold.ttf') format('ttf'),
+         url('fonts/rudawbold.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* Prices Section */
 #prices {
     margin: 3rem auto;
