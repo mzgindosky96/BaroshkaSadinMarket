@@ -27,71 +27,64 @@
 
 <!-- Replace the existing marquee with this -->
 <style>
-/* Enhanced Marquee Styles */
+        /* تعريف الخط */
+        @font-face {
+            font-family: 'Rudaw Bold'; /* اسم تختاره للخط */
+            src: url('rudawbold.ttf') format('truetype'); /* المسار إلى ملف الخط */
+            font-weight: bold; /* تحديد إذا كان الخط عريضًا */
+            font-style: normal;
+        }
+
+        /* تطبيق الخط على النص العربي */
+        .custom-font {
+            font-family: 'Rudaw Bold', sans-serif;
+            font-size: 18px;
+            direction: rtl;
+        }
+    </style>
+<div class="marquee-container">
+    <div class="marquee-content">
+         <p class="custom-font">
+
+            کارتێن  {5,000-1,000-3,000-10,000}كوره ك و زێن و ئاسياسێل  فاستلينك و نه وروز به رده ستن يوسيێت پوبجي و كوينێت تيكتوكي و كارتێن گوگل پله ي و ك
+            ارتێن ئايتونس {2$-3$-5$-10$-15$-20$} به رده ستن 
+      <p/>
+    </div>
+</div>
+
+<style>
 .marquee-container {
     overflow: hidden;
-    position: relative;
+    white-space: nowrap;
     width: 100%;
-    background: linear-gradient(90deg, #1a1a1a, #2d2d2d);
-    padding: 15px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-.marquee-container::before,
-.marquee-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 200px;
-    height: 100%;
-    z-index: 2;
-}
-
-.marquee-container::before {
-    left: 0;
-    background: linear-gradient(90deg, #1a1a1a 0%, transparent 100%);
-}
-
-.marquee-container::after {
-    right: 0;
-    background: linear-gradient(270deg, #1a1a1a 0%, transparent 100%);
+    background: #f0f0f0; /* Optional background color */
+    padding-right: 100%; 
+    direction: left;
 }
 
 .marquee-content {
     display: inline-block;
-    animation: marquee 40s linear infinite;
-    padding-right: 100%;
+    animation: marquee 55s linear infinite;
+    padding-left: 100%; /* Initial offset */
 }
 
 .marquee-content:hover {
     animation-play-state: paused;
-    transform: scale(1.02);
-    transition: transform 0.3s ease;
 }
 
 @keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}
+  0% {
+    transform: translateX(-100%); /* Start position: left side */
+  }
+  100% {
+    transform: translateX(100%); /* End position: right side */
+  }
 
-/* Enhanced Text Styles */
-.custom-font {
-    font-family: 'Rudaw Bold', sans-serif;
-    font-size: 24px;
-    direction: rtl;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    padding: 10px 0;
-    display: inline-block;
-    background: linear-gradient(45deg, #ff6b6b, #ffd93d);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border-top: 2px solid rgba(255,255,255,0.1);
-    border-bottom: 2px solid rgba(255,255,255,0.1);
-    margin: 0 20px;
 }
 </style>
+
+
+
 
 <!-- Add this after the marquee -->
 <section>
